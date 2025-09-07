@@ -1,0 +1,32 @@
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+#*.log
+
+# --- Virtualenv ---
+venv/
+.env/
+.env.local
+*.swp
+
+# --- Uploads e dados locais ---
+uploads/
+#logs/
+#*.db
+#*.sqlite3
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints/
+*.ipynb_convert/
+
+# --- Sistema operacional ---
+.DS_Store
+Thumbs.db
+
+# --- VSCode ---
+.vscode/
+.history/

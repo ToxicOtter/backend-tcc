@@ -1,0 +1,330 @@
+[2025-09-07 00:01:57]  * Debugger is active!
+[2025-09-07 00:01:57]  * Debugger PIN: 107-621-121
+[2025-09-07 00:06:42]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\facial_recognition.py', reloading
+[2025-09-07 00:06:42]  * Debugger is active!
+[2025-09-07 00:06:42]  * Debugger PIN: 107-621-121
+[2025-09-07 00:06:47]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\facial_recognition.py', reloading
+[2025-09-07 00:06:47]  * Debugger is active!
+[2025-09-07 00:06:47]  * Debugger PIN: 107-621-121
+[2025-09-07 00:07:19]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\facial_recognition.py', reloading
+[2025-09-07 00:07:20]  * Debugger is active!
+[2025-09-07 00:07:20]  * Debugger PIN: 107-621-121
+[2025-09-07 00:07:42] IP: 10.0.0.190 | Status: no_face | Iluminação: 36.57 | Reconhecido: não | Tempo resposta: 330.48 ms
+[2025-09-07 00:07:42] 10.0.0.190 - - [07/Sep/2025 00:07:42] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:43] IP: 10.0.0.190 | Status: no_face | Iluminação: 38.64 | Reconhecido: não | Tempo resposta: 87.97 ms
+[2025-09-07 00:07:43] 10.0.0.190 - - [07/Sep/2025 00:07:43] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:44] IP: 10.0.0.190 | Status: no_face | Iluminação: 42.57 | Reconhecido: não | Tempo resposta: 166.90 ms
+[2025-09-07 00:07:44] 10.0.0.190 - - [07/Sep/2025 00:07:44] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:45] IP: 10.0.0.190 | Status: no_face | Iluminação: 43.03 | Reconhecido: não | Tempo resposta: 95.74 ms
+[2025-09-07 00:07:45] 10.0.0.190 - - [07/Sep/2025 00:07:45] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:46] IP: 10.0.0.190 | Status: no_face | Iluminação: 43.41 | Reconhecido: não | Tempo resposta: 106.49 ms
+[2025-09-07 00:07:46] 10.0.0.190 - - [07/Sep/2025 00:07:46] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:47] IP: 10.0.0.190 | Status: no_face | Iluminação: 46.41 | Reconhecido: não | Tempo resposta: 82.94 ms
+[2025-09-07 00:07:47] 10.0.0.190 - - [07/Sep/2025 00:07:47] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:48] IP: 10.0.0.190 | Status: no_face | Iluminação: 47.66 | Reconhecido: não | Tempo resposta: 204.50 ms
+[2025-09-07 00:07:48] 10.0.0.190 - - [07/Sep/2025 00:07:48] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:49] IP: 10.0.0.190 | Status: no_face | Iluminação: 47.12 | Reconhecido: não | Tempo resposta: 330.97 ms
+[2025-09-07 00:07:49] 10.0.0.190 - - [07/Sep/2025 00:07:49] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:50] IP: 10.0.0.190 | Status: recognized | Iluminação: 60.76 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 124.76 ms
+[2025-09-07 00:07:50] 10.0.0.190 - - [07/Sep/2025 00:07:50] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:51] IP: 10.0.0.190 | Status: recognized | Iluminação: 58.35 | Reconhecido: sim | Usuário: Luao | Tempo resposta: 120.41 ms
+[2025-09-07 00:07:51] 10.0.0.190 - - [07/Sep/2025 00:07:51] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:52] IP: 10.0.0.190 | Status: recognized | Iluminação: 54.98 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 99.59 ms
+[2025-09-07 00:07:52] 10.0.0.190 - - [07/Sep/2025 00:07:52] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:53] IP: 10.0.0.190 | Status: recognized | Iluminação: 57.46 | Reconhecido: sim | Usuário: Luao | Tempo resposta: 115.91 ms
+[2025-09-07 00:07:53] 10.0.0.190 - - [07/Sep/2025 00:07:53] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:54] IP: 10.0.0.190 | Status: recognized | Iluminação: 57.36 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 97.95 ms
+[2025-09-07 00:07:54] 10.0.0.190 - - [07/Sep/2025 00:07:54] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:55] IP: 10.0.0.190 | Status: recognized | Iluminação: 56.39 | Reconhecido: sim | Usuário: Luao | Tempo resposta: 121.09 ms
+[2025-09-07 00:07:55] 10.0.0.190 - - [07/Sep/2025 00:07:55] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:56] IP: 10.0.0.190 | Status: recognized | Iluminação: 56.47 | Reconhecido: sim | Usuário: Luao | Tempo resposta: 111.61 ms
+[2025-09-07 00:07:56] 10.0.0.190 - - [07/Sep/2025 00:07:56] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:57] IP: 10.0.0.190 | Status: recognized | Iluminação: 55.82 | Reconhecido: sim | Usuário: Luao | Tempo resposta: 102.72 ms
+[2025-09-07 00:07:57] 10.0.0.190 - - [07/Sep/2025 00:07:57] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:58] IP: 10.0.0.190 | Status: recognized | Iluminação: 56.83 | Reconhecido: sim | Usuário: Luao | Tempo resposta: 91.99 ms
+[2025-09-07 00:07:58] 10.0.0.190 - - [07/Sep/2025 00:07:58] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:07:59] IP: 10.0.0.190 | Status: recognized | Iluminação: 56.86 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 87.94 ms
+[2025-09-07 00:07:59] 10.0.0.190 - - [07/Sep/2025 00:07:59] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:04] IP: 10.0.0.190 | Status: recognized | Iluminação: 53.71 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 3757.43 ms
+[2025-09-07 00:08:04] 10.0.0.190 - - [07/Sep/2025 00:08:04] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:07] IP: 10.0.0.190 | Status: recognized | Iluminação: 57.07 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 2703.84 ms
+[2025-09-07 00:08:07] 10.0.0.190 - - [07/Sep/2025 00:08:07] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:08] IP: 10.0.0.190 | Status: recognized | Iluminação: 57.26 | Reconhecido: sim | Usuário: Luao | Tempo resposta: 1010.90 ms
+[2025-09-07 00:08:08] 10.0.0.190 - - [07/Sep/2025 00:08:08] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:09] IP: 10.0.0.190 | Status: recognized | Iluminação: 60.93 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 672.12 ms
+[2025-09-07 00:08:09] 10.0.0.190 - - [07/Sep/2025 00:08:09] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:09] IP: 10.0.0.190 | Status: recognized | Iluminação: 65.55 | Reconhecido: sim | Usuário: Luao | Tempo resposta: 98.49 ms
+[2025-09-07 00:08:09] 10.0.0.190 - - [07/Sep/2025 00:08:09] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:10] IP: 10.0.0.190 | Status: recognized | Iluminação: 66.48 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 350.15 ms
+[2025-09-07 00:08:10] 10.0.0.190 - - [07/Sep/2025 00:08:10] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:14] IP: 10.0.0.190 | Status: recognized | Iluminação: 66.53 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 155.04 ms
+[2025-09-07 00:08:14] 10.0.0.190 - - [07/Sep/2025 00:08:14] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:14] IP: 10.0.0.190 | Status: recognized | Iluminação: 65.62 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 462.71 ms
+[2025-09-07 00:08:14] 10.0.0.190 - - [07/Sep/2025 00:08:14] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:15] IP: 10.0.0.190 | Status: recognized | Iluminação: 65.57 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 160.02 ms
+[2025-09-07 00:08:15] 10.0.0.190 - - [07/Sep/2025 00:08:15] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:16] IP: 10.0.0.190 | Status: no_face | Iluminação: 49.66 | Reconhecido: não | Tempo resposta: 279.79 ms
+[2025-09-07 00:08:16] 10.0.0.190 - - [07/Sep/2025 00:08:16] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:17] IP: 10.0.0.190 | Status: no_face | Iluminação: 47.95 | Reconhecido: não | Tempo resposta: 337.88 ms
+[2025-09-07 00:08:17] 10.0.0.190 - - [07/Sep/2025 00:08:17] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:18] IP: 10.0.0.190 | Status: no_face | Iluminação: 49.33 | Reconhecido: não | Tempo resposta: 186.30 ms
+[2025-09-07 00:08:18] 10.0.0.190 - - [07/Sep/2025 00:08:18] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:19] IP: 10.0.0.190 | Status: no_face | Iluminação: 51.39 | Reconhecido: não | Tempo resposta: 281.34 ms
+[2025-09-07 00:08:19] 10.0.0.190 - - [07/Sep/2025 00:08:19] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:20] IP: 10.0.0.190 | Status: no_face | Iluminação: 66.61 | Reconhecido: não | Tempo resposta: 477.11 ms
+[2025-09-07 00:08:20] 10.0.0.190 - - [07/Sep/2025 00:08:20] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:21] IP: 10.0.0.190 | Status: no_face | Iluminação: 46.77 | Reconhecido: não | Tempo resposta: 199.98 ms
+[2025-09-07 00:08:21] 10.0.0.190 - - [07/Sep/2025 00:08:21] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:23] IP: 10.0.0.190 | Status: recognized | Iluminação: 46.61 | Reconhecido: sim | Usuário: Luao | Tempo resposta: 669.14 ms
+[2025-09-07 00:08:23] 10.0.0.190 - - [07/Sep/2025 00:08:23] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:23] IP: 10.0.0.190 | Status: recognized | Iluminação: 46.89 | Reconhecido: sim | Usuário: Luao | Tempo resposta: 284.50 ms
+[2025-09-07 00:08:23] 10.0.0.190 - - [07/Sep/2025 00:08:23] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:25] IP: 10.0.0.190 | Status: recognized | Iluminação: 47.03 | Reconhecido: sim | Usuário: Luao | Tempo resposta: 594.63 ms
+[2025-09-07 00:08:25] 10.0.0.190 - - [07/Sep/2025 00:08:25] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:25] IP: 10.0.0.190 | Status: no_face | Iluminação: 45.06 | Reconhecido: não | Tempo resposta: 256.53 ms
+[2025-09-07 00:08:25] 10.0.0.190 - - [07/Sep/2025 00:08:25] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:26] IP: 10.0.0.190 | Status: no_face | Iluminação: 44.62 | Reconhecido: não | Tempo resposta: 282.00 ms
+[2025-09-07 00:08:26] 10.0.0.190 - - [07/Sep/2025 00:08:26] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:27] IP: 10.0.0.190 | Status: no_face | Iluminação: 43.69 | Reconhecido: não | Tempo resposta: 86.88 ms
+[2025-09-07 00:08:27] 10.0.0.190 - - [07/Sep/2025 00:08:27] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:28] IP: 10.0.0.190 | Status: unknown | Iluminação: 39.50 | Reconhecido: não | Tempo resposta: 165.12 ms
+[2025-09-07 00:08:28] 10.0.0.190 - - [07/Sep/2025 00:08:28] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:29] IP: 10.0.0.190 | Status: recognized | Iluminação: 41.35 | Reconhecido: sim | Usuário: Luao | Tempo resposta: 80.06 ms
+[2025-09-07 00:08:29] 10.0.0.190 - - [07/Sep/2025 00:08:29] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:30] IP: 10.0.0.190 | Status: unknown | Iluminação: 41.18 | Reconhecido: não | Tempo resposta: 362.22 ms
+[2025-09-07 00:08:30] 10.0.0.190 - - [07/Sep/2025 00:08:30] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:31] IP: 10.0.0.190 | Status: recognized | Iluminação: 39.74 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 321.99 ms
+[2025-09-07 00:08:31] 10.0.0.190 - - [07/Sep/2025 00:08:31] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:32] IP: 10.0.0.190 | Status: recognized | Iluminação: 40.85 | Reconhecido: sim | Usuário: Luan | Tempo resposta: 79.88 ms
+[2025-09-07 00:08:32] 10.0.0.190 - - [07/Sep/2025 00:08:32] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:33] IP: 10.0.0.190 | Status: no_face | Iluminação: 43.70 | Reconhecido: não | Tempo resposta: 320.29 ms
+[2025-09-07 00:08:33] 10.0.0.190 - - [07/Sep/2025 00:08:33] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:34] IP: 10.0.0.190 | Status: unknown | Iluminação: 42.66 | Reconhecido: não | Tempo resposta: 192.06 ms
+[2025-09-07 00:08:34] 10.0.0.190 - - [07/Sep/2025 00:08:34] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:35] IP: 10.0.0.190 | Status: unknown | Iluminação: 42.67 | Reconhecido: não | Tempo resposta: 55.48 ms
+[2025-09-07 00:08:35] 10.0.0.190 - - [07/Sep/2025 00:08:35] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:36] IP: 10.0.0.190 | Status: unknown | Iluminação: 42.80 | Reconhecido: não | Tempo resposta: 482.92 ms
+[2025-09-07 00:08:36] 10.0.0.190 - - [07/Sep/2025 00:08:36] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:37] IP: 10.0.0.190 | Status: no_face | Iluminação: 57.63 | Reconhecido: não | Tempo resposta: 131.59 ms
+[2025-09-07 00:08:37] 10.0.0.190 - - [07/Sep/2025 00:08:37] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:38] IP: 10.0.0.190 | Status: no_face | Iluminação: 67.29 | Reconhecido: não | Tempo resposta: 507.89 ms
+[2025-09-07 00:08:38] 10.0.0.190 - - [07/Sep/2025 00:08:38] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:39] IP: 10.0.0.190 | Status: no_face | Iluminação: 61.28 | Reconhecido: não | Tempo resposta: 317.45 ms
+[2025-09-07 00:08:39] 10.0.0.190 - - [07/Sep/2025 00:08:39] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:40] IP: 10.0.0.190 | Status: no_face | Iluminação: 73.55 | Reconhecido: não | Tempo resposta: 473.44 ms
+[2025-09-07 00:08:40] 10.0.0.190 - - [07/Sep/2025 00:08:40] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:41] IP: 10.0.0.190 | Status: no_face | Iluminação: 76.32 | Reconhecido: não | Tempo resposta: 318.79 ms
+[2025-09-07 00:08:41] 10.0.0.190 - - [07/Sep/2025 00:08:41] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:42] IP: 10.0.0.190 | Status: no_face | Iluminação: 77.14 | Reconhecido: não | Tempo resposta: 462.83 ms
+[2025-09-07 00:08:42] 10.0.0.190 - - [07/Sep/2025 00:08:42] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:43] IP: 10.0.0.190 | Status: no_face | Iluminação: 67.06 | Reconhecido: não | Tempo resposta: 422.13 ms
+[2025-09-07 00:08:43] 10.0.0.190 - - [07/Sep/2025 00:08:43] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:44] IP: 10.0.0.190 | Status: no_face | Iluminação: 35.27 | Reconhecido: não | Tempo resposta: 239.12 ms
+[2025-09-07 00:08:44] 10.0.0.190 - - [07/Sep/2025 00:08:44] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:08:45] IP: 10.0.0.190 | Status: no_face | Iluminação: 34.66 | Reconhecido: não | Tempo resposta: 96.97 ms
+[2025-09-07 00:08:45] 10.0.0.190 - - [07/Sep/2025 00:08:45] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:10:12]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\facial_recognition.py', reloading
+[2025-09-07 00:10:12]  * Debugger is active!
+[2025-09-07 00:10:12]  * Debugger PIN: 107-621-121
+[2025-09-07 00:11:42]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\facial_recognition.py', reloading
+[2025-09-07 00:11:43]  * Debugger is active!
+[2025-09-07 00:11:43]  * Debugger PIN: 107-621-121
+[2025-09-07 00:12:37] IP: 10.0.0.190 | Status: no_face | Iluminação: 28.61 | Reconhecido: não | Tempo resposta: 122.65 ms
+[2025-09-07 00:12:37] 10.0.0.190 - - [07/Sep/2025 00:12:37] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:37] IP: 10.0.0.190 | Status: no_face | Iluminação: 28.54 | Reconhecido: não | Tempo resposta: 81.39 ms
+[2025-09-07 00:12:37] 10.0.0.190 - - [07/Sep/2025 00:12:37] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:39] IP: 10.0.0.190 | Status: no_face | Iluminação: 42.86 | Reconhecido: não | Tempo resposta: 79.78 ms
+[2025-09-07 00:12:39] 10.0.0.190 - - [07/Sep/2025 00:12:39] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:39] IP: 10.0.0.190 | Status: no_face | Iluminação: 42.73 | Reconhecido: não | Tempo resposta: 148.78 ms
+[2025-09-07 00:12:39] 10.0.0.190 - - [07/Sep/2025 00:12:39] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:40] IP: 10.0.0.190 | Status: no_face | Iluminação: 34.41 | Reconhecido: não | Tempo resposta: 93.68 ms
+[2025-09-07 00:12:40] 10.0.0.190 - - [07/Sep/2025 00:12:40] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:41] IP: 10.0.0.190 | Status: no_face | Iluminação: 38.28 | Reconhecido: não | Tempo resposta: 89.11 ms
+[2025-09-07 00:12:41] 10.0.0.190 - - [07/Sep/2025 00:12:41] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:43] IP: 10.0.0.190 | Status: no_face | Iluminação: 50.83 | Reconhecido: não | Tempo resposta: 414.91 ms
+[2025-09-07 00:12:43] 10.0.0.190 - - [07/Sep/2025 00:12:43] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:43] IP: 10.0.0.190 | Status: no_face | Iluminação: 42.25 | Reconhecido: não | Tempo resposta: 87.07 ms
+[2025-09-07 00:12:43] 10.0.0.190 - - [07/Sep/2025 00:12:43] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:44] IP: 10.0.0.190 | Status: no_face | Iluminação: 26.07 | Reconhecido: não | Tempo resposta: 90.69 ms
+[2025-09-07 00:12:44] 10.0.0.190 - - [07/Sep/2025 00:12:44] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:45] IP: 10.0.0.190 | Status: unknown | Iluminação: 35.10 | Reconhecido: não | Tempo resposta: 116.28 ms
+[2025-09-07 00:12:45] 10.0.0.190 - - [07/Sep/2025 00:12:45] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:46] IP: 10.0.0.190 | Status: recognized | Iluminação: 35.69 | Reconhecido: sim | Usuário: Luao (65.73%) | Tempo resposta: 56.67 ms
+[2025-09-07 00:12:46] 10.0.0.190 - - [07/Sep/2025 00:12:46] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:47] IP: 10.0.0.190 | Status: recognized | Iluminação: 35.80 | Reconhecido: sim | Usuário: Luao (62.62%) | Tempo resposta: 106.33 ms
+[2025-09-07 00:12:47] 10.0.0.190 - - [07/Sep/2025 00:12:47] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:48] IP: 10.0.0.190 | Status: recognized | Iluminação: 36.53 | Reconhecido: sim | Usuário: Luao (49.05%) | Tempo resposta: 122.52 ms
+[2025-09-07 00:12:48] 10.0.0.190 - - [07/Sep/2025 00:12:48] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:49] IP: 10.0.0.190 | Status: recognized | Iluminação: 38.41 | Reconhecido: sim | Usuário: Luao (59.12%) | Tempo resposta: 96.52 ms
+[2025-09-07 00:12:49] 10.0.0.190 - - [07/Sep/2025 00:12:49] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:50] IP: 10.0.0.190 | Status: recognized | Iluminação: 40.74 | Reconhecido: sim | Usuário: Luao (57.21%) | Tempo resposta: 98.70 ms
+[2025-09-07 00:12:50] 10.0.0.190 - - [07/Sep/2025 00:12:50] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:51] IP: 10.0.0.190 | Status: recognized | Iluminação: 41.12 | Reconhecido: sim | Usuário: Luao (59.07%) | Tempo resposta: 115.36 ms
+[2025-09-07 00:12:51] 10.0.0.190 - - [07/Sep/2025 00:12:51] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:52] IP: 10.0.0.190 | Status: recognized | Iluminação: 41.55 | Reconhecido: sim | Usuário: Luao (48.14%) | Tempo resposta: 104.62 ms
+[2025-09-07 00:12:52] 10.0.0.190 - - [07/Sep/2025 00:12:52] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:53] IP: 10.0.0.190 | Status: recognized | Iluminação: 40.42 | Reconhecido: sim | Usuário: Luao (55.78%) | Tempo resposta: 108.21 ms
+[2025-09-07 00:12:53] 10.0.0.190 - - [07/Sep/2025 00:12:53] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:54] IP: 10.0.0.190 | Status: recognized | Iluminação: 40.74 | Reconhecido: sim | Usuário: Luao (67.55%) | Tempo resposta: 108.00 ms
+[2025-09-07 00:12:54] 10.0.0.190 - - [07/Sep/2025 00:12:54] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:55] IP: 10.0.0.190 | Status: recognized | Iluminação: 41.18 | Reconhecido: sim | Usuário: Luao (65.75%) | Tempo resposta: 91.83 ms
+[2025-09-07 00:12:55] 10.0.0.190 - - [07/Sep/2025 00:12:55] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:56] IP: 10.0.0.190 | Status: recognized | Iluminação: 40.48 | Reconhecido: sim | Usuário: Luao (53.35%) | Tempo resposta: 114.74 ms
+[2025-09-07 00:12:56] 10.0.0.190 - - [07/Sep/2025 00:12:56] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:57] IP: 10.0.0.190 | Status: recognized | Iluminação: 40.40 | Reconhecido: sim | Usuário: Luao (68.34%) | Tempo resposta: 104.46 ms
+[2025-09-07 00:12:57] 10.0.0.190 - - [07/Sep/2025 00:12:57] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:58] IP: 10.0.0.190 | Status: unknown | Iluminação: 40.46 | Reconhecido: não | Tempo resposta: 122.88 ms
+[2025-09-07 00:12:58] 10.0.0.190 - - [07/Sep/2025 00:12:58] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:12:59] IP: 10.0.0.190 | Status: recognized | Iluminação: 40.05 | Reconhecido: sim | Usuário: Luao (57.64%) | Tempo resposta: 126.31 ms
+[2025-09-07 00:12:59] 10.0.0.190 - - [07/Sep/2025 00:12:59] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:00] IP: 10.0.0.190 | Status: recognized | Iluminação: 39.11 | Reconhecido: sim | Usuário: Luao (48.36%) | Tempo resposta: 105.89 ms
+[2025-09-07 00:13:00] 10.0.0.190 - - [07/Sep/2025 00:13:00] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:01] IP: 10.0.0.190 | Status: no_face | Iluminação: 56.36 | Reconhecido: não | Tempo resposta: 52.82 ms
+[2025-09-07 00:13:01] 10.0.0.190 - - [07/Sep/2025 00:13:01] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:02] IP: 10.0.0.190 | Status: no_face | Iluminação: 38.55 | Reconhecido: não | Tempo resposta: 91.30 ms
+[2025-09-07 00:13:02] 10.0.0.190 - - [07/Sep/2025 00:13:02] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:03] IP: 10.0.0.190 | Status: no_face | Iluminação: 34.46 | Reconhecido: não | Tempo resposta: 74.64 ms
+[2025-09-07 00:13:03] 10.0.0.190 - - [07/Sep/2025 00:13:03] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:04] IP: 10.0.0.190 | Status: no_face | Iluminação: 35.44 | Reconhecido: não | Tempo resposta: 90.00 ms
+[2025-09-07 00:13:04] 10.0.0.190 - - [07/Sep/2025 00:13:04] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:05] IP: 10.0.0.190 | Status: no_face | Iluminação: 35.76 | Reconhecido: não | Tempo resposta: 208.34 ms
+[2025-09-07 00:13:05] 10.0.0.190 - - [07/Sep/2025 00:13:05] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:06] IP: 10.0.0.190 | Status: no_face | Iluminação: 37.26 | Reconhecido: não | Tempo resposta: 83.01 ms
+[2025-09-07 00:13:06] 10.0.0.190 - - [07/Sep/2025 00:13:06] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:07] IP: 10.0.0.190 | Status: no_face | Iluminação: 37.98 | Reconhecido: não | Tempo resposta: 103.72 ms
+[2025-09-07 00:13:07] 10.0.0.190 - - [07/Sep/2025 00:13:07] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:08] IP: 10.0.0.190 | Status: no_face | Iluminação: 38.65 | Reconhecido: não | Tempo resposta: 92.67 ms
+[2025-09-07 00:13:08] 10.0.0.190 - - [07/Sep/2025 00:13:08] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:09] IP: 10.0.0.190 | Status: no_face | Iluminação: 38.61 | Reconhecido: não | Tempo resposta: 93.19 ms
+[2025-09-07 00:13:09] 10.0.0.190 - - [07/Sep/2025 00:13:09] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:11] IP: 10.0.0.190 | Status: recognized | Iluminação: 63.36 | Reconhecido: sim | Usuário: Luan (47.64%) | Tempo resposta: 118.05 ms
+[2025-09-07 00:13:11] 10.0.0.190 - - [07/Sep/2025 00:13:11] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:11] IP: 10.0.0.190 | Status: recognized | Iluminação: 61.34 | Reconhecido: sim | Usuário: Luao (53.50%) | Tempo resposta: 140.31 ms
+[2025-09-07 00:13:11] 10.0.0.190 - - [07/Sep/2025 00:13:11] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:12] IP: 10.0.0.190 | Status: recognized | Iluminação: 62.05 | Reconhecido: sim | Usuário: Luao (38.56%) | Tempo resposta: 98.20 ms
+[2025-09-07 00:13:12] 10.0.0.190 - - [07/Sep/2025 00:13:12] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:13] IP: 10.0.0.190 | Status: recognized | Iluminação: 60.89 | Reconhecido: sim | Usuário: Luao (54.44%) | Tempo resposta: 90.35 ms
+[2025-09-07 00:13:13] 10.0.0.190 - - [07/Sep/2025 00:13:13] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:14] IP: 10.0.0.190 | Status: recognized | Iluminação: 60.36 | Reconhecido: sim | Usuário: Luao (55.56%) | Tempo resposta: 116.98 ms
+[2025-09-07 00:13:14] 10.0.0.190 - - [07/Sep/2025 00:13:14] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:15] IP: 10.0.0.190 | Status: recognized | Iluminação: 59.87 | Reconhecido: sim | Usuário: Luao (46.35%) | Tempo resposta: 86.69 ms
+[2025-09-07 00:13:15] 10.0.0.190 - - [07/Sep/2025 00:13:15] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:16] IP: 10.0.0.190 | Status: recognized | Iluminação: 58.72 | Reconhecido: sim | Usuário: Luan (37.60%) | Tempo resposta: 109.79 ms
+[2025-09-07 00:13:16] 10.0.0.190 - - [07/Sep/2025 00:13:16] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:17] IP: 10.0.0.190 | Status: recognized | Iluminação: 63.29 | Reconhecido: sim | Usuário: Luan (27.05%) | Tempo resposta: 137.56 ms
+[2025-09-07 00:13:17] 10.0.0.190 - - [07/Sep/2025 00:13:17] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:18] IP: 10.0.0.190 | Status: recognized | Iluminação: 63.37 | Reconhecido: sim | Usuário: Luan (41.80%) | Tempo resposta: 104.00 ms
+[2025-09-07 00:13:18] 10.0.0.190 - - [07/Sep/2025 00:13:18] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:19] IP: 10.0.0.190 | Status: recognized | Iluminação: 58.91 | Reconhecido: sim | Usuário: Luan (52.32%) | Tempo resposta: 122.26 ms
+[2025-09-07 00:13:19] 10.0.0.190 - - [07/Sep/2025 00:13:19] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:20] IP: 10.0.0.190 | Status: recognized | Iluminação: 61.60 | Reconhecido: sim | Usuário: Luan (29.79%) | Tempo resposta: 114.21 ms
+[2025-09-07 00:13:20] 10.0.0.190 - - [07/Sep/2025 00:13:20] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:21] IP: 10.0.0.190 | Status: recognized | Iluminação: 73.45 | Reconhecido: sim | Usuário: Luan (27.36%) | Tempo resposta: 125.20 ms
+[2025-09-07 00:13:21] 10.0.0.190 - - [07/Sep/2025 00:13:21] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:22] IP: 10.0.0.190 | Status: recognized | Iluminação: 67.08 | Reconhecido: sim | Usuário: Luan (30.03%) | Tempo resposta: 113.12 ms
+[2025-09-07 00:13:22] 10.0.0.190 - - [07/Sep/2025 00:13:22] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:23] IP: 10.0.0.190 | Status: recognized | Iluminação: 67.62 | Reconhecido: sim | Usuário: Luan (19.51%) | Tempo resposta: 104.73 ms
+[2025-09-07 00:13:23] 10.0.0.190 - - [07/Sep/2025 00:13:23] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:24] IP: 10.0.0.190 | Status: recognized | Iluminação: 67.47 | Reconhecido: sim | Usuário: Luan (19.95%) | Tempo resposta: 99.14 ms
+[2025-09-07 00:13:24] 10.0.0.190 - - [07/Sep/2025 00:13:24] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:25] IP: 10.0.0.190 | Status: recognized | Iluminação: 65.67 | Reconhecido: sim | Usuário: Luan (40.27%) | Tempo resposta: 153.91 ms
+[2025-09-07 00:13:25] 10.0.0.190 - - [07/Sep/2025 00:13:25] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:26] IP: 10.0.0.190 | Status: recognized | Iluminação: 67.13 | Reconhecido: sim | Usuário: Luan (22.32%) | Tempo resposta: 175.52 ms
+[2025-09-07 00:13:26] 10.0.0.190 - - [07/Sep/2025 00:13:26] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:27] IP: 10.0.0.190 | Status: recognized | Iluminação: 67.77 | Reconhecido: sim | Usuário: Luan (30.93%) | Tempo resposta: 116.65 ms
+[2025-09-07 00:13:27] 10.0.0.190 - - [07/Sep/2025 00:13:27] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:28] IP: 10.0.0.190 | Status: recognized | Iluminação: 67.65 | Reconhecido: sim | Usuário: Luan (25.17%) | Tempo resposta: 115.97 ms
+[2025-09-07 00:13:28] 10.0.0.190 - - [07/Sep/2025 00:13:28] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:29] IP: 10.0.0.190 | Status: recognized | Iluminação: 67.95 | Reconhecido: sim | Usuário: Luan (24.81%) | Tempo resposta: 118.30 ms
+[2025-09-07 00:13:29] 10.0.0.190 - - [07/Sep/2025 00:13:29] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:30] IP: 10.0.0.190 | Status: recognized | Iluminação: 68.60 | Reconhecido: sim | Usuário: Luan (25.92%) | Tempo resposta: 93.38 ms
+[2025-09-07 00:13:30] 10.0.0.190 - - [07/Sep/2025 00:13:30] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:31] IP: 10.0.0.190 | Status: recognized | Iluminação: 68.21 | Reconhecido: sim | Usuário: Luan (18.79%) | Tempo resposta: 100.85 ms
+[2025-09-07 00:13:31] 10.0.0.190 - - [07/Sep/2025 00:13:31] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:32] IP: 10.0.0.190 | Status: recognized | Iluminação: 68.36 | Reconhecido: sim | Usuário: Luan (21.47%) | Tempo resposta: 111.13 ms
+[2025-09-07 00:13:32] 10.0.0.190 - - [07/Sep/2025 00:13:32] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:33] IP: 10.0.0.190 | Status: recognized | Iluminação: 68.91 | Reconhecido: sim | Usuário: Luan (23.37%) | Tempo resposta: 117.05 ms
+[2025-09-07 00:13:33] 10.0.0.190 - - [07/Sep/2025 00:13:33] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:34] IP: 10.0.0.190 | Status: recognized | Iluminação: 68.89 | Reconhecido: sim | Usuário: Luan (31.64%) | Tempo resposta: 115.61 ms
+[2025-09-07 00:13:34] 10.0.0.190 - - [07/Sep/2025 00:13:34] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:35] IP: 10.0.0.190 | Status: recognized | Iluminação: 68.35 | Reconhecido: sim | Usuário: Luan (22.55%) | Tempo resposta: 179.22 ms
+[2025-09-07 00:13:35] 10.0.0.190 - - [07/Sep/2025 00:13:35] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:36] IP: 10.0.0.190 | Status: recognized | Iluminação: 68.60 | Reconhecido: sim | Usuário: Luan (24.87%) | Tempo resposta: 107.75 ms
+[2025-09-07 00:13:36] 10.0.0.190 - - [07/Sep/2025 00:13:36] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:37] IP: 10.0.0.190 | Status: recognized | Iluminação: 68.35 | Reconhecido: sim | Usuário: Luan (29.23%) | Tempo resposta: 113.24 ms
+[2025-09-07 00:13:37] 10.0.0.190 - - [07/Sep/2025 00:13:37] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:38] IP: 10.0.0.190 | Status: recognized | Iluminação: 69.87 | Reconhecido: sim | Usuário: Luan (33.00%) | Tempo resposta: 152.60 ms
+[2025-09-07 00:13:38] 10.0.0.190 - - [07/Sep/2025 00:13:38] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:39] IP: 10.0.0.190 | Status: recognized | Iluminação: 70.25 | Reconhecido: sim | Usuário: Luan (21.90%) | Tempo resposta: 136.71 ms
+[2025-09-07 00:13:39] 10.0.0.190 - - [07/Sep/2025 00:13:39] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:40] IP: 10.0.0.190 | Status: recognized | Iluminação: 69.68 | Reconhecido: sim | Usuário: Luan (22.02%) | Tempo resposta: 92.19 ms
+[2025-09-07 00:13:40] 10.0.0.190 - - [07/Sep/2025 00:13:40] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:41] IP: 10.0.0.190 | Status: recognized | Iluminação: 70.71 | Reconhecido: sim | Usuário: Luan (33.26%) | Tempo resposta: 124.02 ms
+[2025-09-07 00:13:41] 10.0.0.190 - - [07/Sep/2025 00:13:41] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:42] IP: 10.0.0.190 | Status: recognized | Iluminação: 70.24 | Reconhecido: sim | Usuário: Luan (31.65%) | Tempo resposta: 42.74 ms
+[2025-09-07 00:13:42] 10.0.0.190 - - [07/Sep/2025 00:13:42] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:43] IP: 10.0.0.190 | Status: no_face | Iluminação: 60.12 | Reconhecido: não | Tempo resposta: 89.15 ms
+[2025-09-07 00:13:43] 10.0.0.190 - - [07/Sep/2025 00:13:43] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:44] IP: 10.0.0.190 | Status: no_face | Iluminação: 57.49 | Reconhecido: não | Tempo resposta: 85.43 ms
+[2025-09-07 00:13:44] 10.0.0.190 - - [07/Sep/2025 00:13:44] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:45] IP: 10.0.0.190 | Status: no_face | Iluminação: 60.32 | Reconhecido: não | Tempo resposta: 81.97 ms
+[2025-09-07 00:13:45] 10.0.0.190 - - [07/Sep/2025 00:13:45] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:46] IP: 10.0.0.190 | Status: no_face | Iluminação: 58.60 | Reconhecido: não | Tempo resposta: 145.55 ms
+[2025-09-07 00:13:46] 10.0.0.190 - - [07/Sep/2025 00:13:46] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:47] IP: 10.0.0.190 | Status: no_face | Iluminação: 59.57 | Reconhecido: não | Tempo resposta: 92.15 ms
+[2025-09-07 00:13:47] 10.0.0.190 - - [07/Sep/2025 00:13:47] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:48] IP: 10.0.0.190 | Status: no_face | Iluminação: 60.50 | Reconhecido: não | Tempo resposta: 94.31 ms
+[2025-09-07 00:13:48] 10.0.0.190 - - [07/Sep/2025 00:13:48] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:49] IP: 10.0.0.190 | Status: no_face | Iluminação: 59.68 | Reconhecido: não | Tempo resposta: 123.41 ms
+[2025-09-07 00:13:49] 10.0.0.190 - - [07/Sep/2025 00:13:49] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:50] IP: 10.0.0.190 | Status: no_face | Iluminação: 62.61 | Reconhecido: não | Tempo resposta: 119.13 ms
+[2025-09-07 00:13:50] 10.0.0.190 - - [07/Sep/2025 00:13:50] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:51] IP: 10.0.0.190 | Status: no_face | Iluminação: 61.98 | Reconhecido: não | Tempo resposta: 93.41 ms
+[2025-09-07 00:13:51] 10.0.0.190 - - [07/Sep/2025 00:13:51] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:53] IP: 10.0.0.190 | Status: no_face | Iluminação: 58.29 | Reconhecido: não | Tempo resposta: 113.05 ms
+[2025-09-07 00:13:53] 10.0.0.190 - - [07/Sep/2025 00:13:53] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:53] IP: 10.0.0.190 | Status: no_face | Iluminação: 88.61 | Reconhecido: não | Tempo resposta: 43.37 ms
+[2025-09-07 00:13:53] 10.0.0.190 - - [07/Sep/2025 00:13:53] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:54] IP: 10.0.0.190 | Status: no_face | Iluminação: 40.40 | Reconhecido: não | Tempo resposta: 78.47 ms
+[2025-09-07 00:13:54] 10.0.0.190 - - [07/Sep/2025 00:13:54] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:13:55] IP: 10.0.0.190 | Status: no_face | Iluminação: 33.66 | Reconhecido: não | Tempo resposta: 76.81 ms
+[2025-09-07 00:13:55] 10.0.0.190 - - [07/Sep/2025 00:13:55] "POST api/images HTTP/1.1" 200 -
+[2025-09-07 00:21:39]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\user.py', reloading
+[2025-09-07 00:21:40]  * Debugger is active!
+[2025-09-07 00:21:40]  * Debugger PIN: 107-621-121
+[2025-09-07 00:24:29] 127.0.0.1 - - [07/Sep/2025 00:24:29] "[31m[1mPOST /api/users/4 HTTP/1.1[0m" 405 -
+[2025-09-07 00:25:54] 127.0.0.1 - - [07/Sep/2025 00:25:54] "POST /api/users HTTP/1.1" 200 -
+[2025-09-07 00:34:14]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\models\\user.py', reloading
+[2025-09-07 00:34:15]  * Debugger is active!
+[2025-09-07 00:34:15]  * Debugger PIN: 107-621-121
+[2025-09-07 00:34:42] 127.0.0.1 - - [07/Sep/2025 00:34:42] "GET /api/users/3 HTTP/1.1" 200 -
+[2025-09-07 00:35:10] 127.0.0.1 - - [07/Sep/2025 00:35:10] "GET /api/users/2 HTTP/1.1" 200 -
+[2025-09-07 00:35:14] 127.0.0.1 - - [07/Sep/2025 00:35:14] "GET /api/users/4 HTTP/1.1" 200 -
+[2025-09-07 00:38:33]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\facial_recognition.py', reloading
+[2025-09-07 00:38:34]  * Debugger is active!
+[2025-09-07 00:38:34]  * Debugger PIN: 107-621-121
+[2025-09-07 00:39:03]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\facial_recognition.py', reloading
+[2025-09-07 00:39:04]  * Debugger is active!
+[2025-09-07 00:39:04]  * Debugger PIN: 107-621-121
+[2025-09-07 00:43:12]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\models\\user.py', reloading
+[2025-09-07 00:43:13]  * Debugger is active!
+[2025-09-07 00:43:13]  * Debugger PIN: 107-621-121
+[2025-09-07 00:50:28] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.0.0.113:5001
+[2025-09-07 00:50:28] [33mPress CTRL+C to quit[0m
+[2025-09-07 00:50:28]  * Restarting with stat
+[2025-09-07 00:50:29]  * Debugger is active!
+[2025-09-07 00:50:29]  * Debugger PIN: 107-621-121
+[2025-09-07 00:51:16]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\user.py', reloading
+[2025-09-07 00:51:16]  * Restarting with stat
+[2025-09-07 00:51:17]  * Debugger is active!
+[2025-09-07 00:51:17]  * Debugger PIN: 107-621-121
+[2025-09-07 00:51:26] 127.0.0.1 - - [07/Sep/2025 00:51:26] "POST /api/users HTTP/1.1" 200 -
+[2025-09-07 00:52:22]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\user.py', reloading
+[2025-09-07 00:52:22]  * Restarting with stat
+[2025-09-07 00:52:22]  * Debugger is active!
+[2025-09-07 00:52:22]  * Debugger PIN: 107-621-121
+[2025-09-07 00:52:26] 127.0.0.1 - - [07/Sep/2025 00:52:26] "POST /api/users HTTP/1.1" 200 -
+[2025-09-07 00:53:13] 127.0.0.1 - - [07/Sep/2025 00:53:13] "POST /api/users HTTP/1.1" 200 -
