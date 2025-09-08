@@ -92,6 +92,29 @@ class DetectionLog(db.Model):
             'status': self.status
         }
 
+class RecognitionLog(db.Model):
+    """Log de detecções"""
+    id = db.Column(db.Integer, primary_key=True)
+    detected_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    ip = db.Column(db.String(45), nullable=True) 
+    status = db.Column(db.String(20), default='unknown')           # 'recognized', 'unknown', 'no_face', 'error'
+    light_level = db.Column(db.Float, nullable=True)               # iluminacao
+    recognized = db.Column(db.Boolean, default=False)              # reconhecido (sim/nao -> True/False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    confidence = db.Column(db.Float, nullable=True)                # já tinha; mantenha como 0-1 ou % (defina padrão)
+    latency_ms = db.Column(db.Float, nullable=True)                # tempo_resposta_ms
+
+    def to_dict(self):    
+        return {
+            'detected_at': self.detected_at,
+            'ip': self.ip,
+            'status': self.status,
+            'light_level': self.light_level,
+            'recognized': self.recognized,
+            'user_id': self.user_id,
+            'confidence': self.confidence,
+            'latency_ms': self.latency_ms
+        }
 
 class Notification(db.Model):
     """Notificações para o app mobile"""

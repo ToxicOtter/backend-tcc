@@ -9,7 +9,7 @@ from io import BytesIO
 from PIL import Image
 import logging
 
-from src.models.user import User, DetectionLog, Notification, Facial, db #,Schedule
+from src.models.user import User, DetectionLog, Notification, Facial, RecognitionLog, db #,Schedule
 #from src.utils.notifications import send_push_notification
 from config import get_config
 
@@ -176,14 +176,14 @@ def receive_image():
 
         if current_face_encoding is None:
             os.remove(temp_file_path) # Remove a imagem temporária
-            detection_log = DetectionLog(
+            """ detection_log = DetectionLog(
                 user_id=None,
                 image_path=temp_file_path, 
                 confidence=0.0,
                 status="no_face"
             )
             db.session.add(detection_log)
-            db.session.commit()
+            db.session.commit() """
             #return jsonify({"status": "no_face", "message": "Nenhuma face detectada na imagem"}), 200
         
             fim = datetime.now()
@@ -193,10 +193,23 @@ def receive_image():
             print(f"[{datetime.now()}] IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
             logging.info(f"IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
 
+            recognition_log = RecognitionLog(
+                user_id= None,
+                confidence= None,   # 0–1
+                status=status,                                        # 'recognized', 'unknown', 'no_face', 'error'
+                detected_at=fim,                        # ou o timestamp de início da req
+                ip=request.remote_addr,
+                light_level=iluminacao,
+                recognized= False,
+                latency_ms=duracao,
+            )
+            db.session.add(recognition_log)
+            db.session.commit()
+
             return jsonify({
                 'status': 'no_face',
                 'message': 'Nenhuma face detectada na imagem',
-                'detection_id': detection_log.id,
+                'detection_id': recognition_log.id,
                 'tempo_resposta_ms': duracao
             })
 
@@ -225,14 +238,14 @@ def receive_image():
         if best_match:
             # Usuário reconhecido
             best_match = User.query.filter_by(id=best_match.user_id).first()
-            detection_log = DetectionLog(
+            """ detection_log = DetectionLog(
                 user_id=best_match.id,
                 image_path=temp_file_path, 
                 confidence=best_distance,
                 status="recognized"
             )
             db.session.add(detection_log)
-            db.session.commit()
+            db.session.commit() """
             
             total_reconhecidos += 1
             fim = datetime.now()
@@ -242,24 +255,37 @@ def receive_image():
             print(f"[{datetime.now()}] IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: sim | Usuário: {best_match.username} ({best_distance:.2%}) | Tempo resposta: {duracao:.2f} ms")
             logging.info(f"IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: sim | Usuário: {best_match.username} ({best_distance:.2%}) | Tempo resposta: {duracao:.2f} ms")
 
+            recognition_log = RecognitionLog(
+                user_id= best_match.id,
+                confidence= best_distance,   # 0–1
+                status=status,                                        # 'recognized', 'unknown', 'no_face', 'error'
+                detected_at=fim,                        # ou o timestamp de início da req
+                ip=request.remote_addr,
+                light_level=iluminacao,
+                recognized= True,
+                latency_ms=duracao,
+            )
+            db.session.add(recognition_log)
+            db.session.commit()
+
             return jsonify({
                 'status': 'recognized',
                 'user': best_match.to_dict(),
                 'confidence': best_distance,
-                'detection_id': detection_log.id,
+                'detection_id': recognition_log.id,
                 'message': f"Usuário {best_match.username} reconhecido com {best_distance:.2%} de confiança",
                 'tempo_resposta_ms': duracao
             })
         else:
             # Nenhuma correspondência encontrada
-            detection_log = DetectionLog(
+            """ detection_log = DetectionLog(
                 user_id=None,
                 image_path=temp_file_path, 
                 confidence=0.0,
                 status="unknown"
             )
             db.session.add(detection_log)
-            db.session.commit()
+            db.session.commit() """
 
             fim = datetime.now()
             duracao = (fim - inicio).total_seconds() * 1000  # em ms
@@ -268,10 +294,23 @@ def receive_image():
             print(f"[{datetime.now()}] IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
             logging.info(f"IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
 
+            recognition_log = RecognitionLog(
+                user_id= None,
+                confidence= None,   # 0–1
+                status=status,                                        # 'recognized', 'unknown', 'no_face', 'error'
+                detected_at=fim,                        # ou o timestamp de início da req
+                ip=request.remote_addr,
+                light_level=iluminacao,
+                recognized= False,
+                latency_ms=duracao,
+            )
+            db.session.add(recognition_log)
+            db.session.commit()
+
             return jsonify({
                 'status': 'unknown',
                 'message': 'Face detectada mas usuário não reconhecido',
-                'detection_id': detection_log.id,
+                'detection_id': recognition_log.id,
                 'tempo_resposta_ms': duracao
             })
 

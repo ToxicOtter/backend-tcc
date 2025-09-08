@@ -429,3 +429,19 @@
 [2025-09-07 22:07:36] 10.0.0.190 - - [07/Sep/2025 22:07:36] "POST api/images HTTP/1.1" 200 -
 [2025-09-07 23:07:29]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\facial_recognition.py', reloading
 [2025-09-07 23:07:29]  * Restarting with stat
+[2025-09-07 23:07:30]  * Debugger is active!
+[2025-09-07 23:07:30]  * Debugger PIN: 107-621-121
+[2025-09-07 23:28:28]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\models\\user.py', reloading
+[2025-09-07 23:28:28]  * Restarting with stat
+[2025-09-07 23:28:29]  * Debugger is active!
+[2025-09-07 23:28:29]  * Debugger PIN: 107-621-121
+[2025-09-07 23:34:47]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\facial_recognition.py', reloading
+[2025-09-07 23:34:47]  * Restarting with stat
+[2025-09-07 23:34:48]  * Debugger is active!
+[2025-09-07 23:34:48]  * Debugger PIN: 107-621-121
+[2025-09-07 23:36:14]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\facial_recognition.py', reloading
+[2025-09-07 23:36:14]  * Restarting with stat
+[2025-09-07 23:36:15]  * Debugger is active!
+[2025-09-07 23:36:15]  * Debugger PIN: 107-621-121
+[2025-09-07 23:37:44]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\facial_recognition.py', reloading
+[2025-09-07 23:37:44]  * Restarting with stat
