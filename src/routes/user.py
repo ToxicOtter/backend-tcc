@@ -123,8 +123,10 @@ def add_embedding_to_user(user, new_embedding):
     embeddings_list.append(new_embedding.tolist())
     user.face_encoding = json.dumps(embeddings_list)
 
-def add_embedding_to_facial(facial, new_embedding):
+def add_embedding_to_facial(user_id, new_embedding):
     """Adiciona um novo embedding ao usuário, garantindo lista no banco"""
+    facial = Facial(user_id = user_id)
+
     new_embedding = np.array(new_embedding, dtype=np.float32).flatten()
     if new_embedding.shape[0] != 128:
         if new_embedding.shape[0] > 128:
@@ -140,7 +142,10 @@ def add_embedding_to_facial(facial, new_embedding):
         embeddings_list = json.loads(facial.face_encoding)
 
     embeddings_list.append(new_embedding.tolist())
-    facial.face_encoding = json.dumps(embeddings_list)
+    facial.face_encoding = json.dumps(new_embedding.tolist())
+    facial.user_id = user_id
+
+    db.session.add(facial)
 
 @user_bp.route('/users', methods=['GET'])
 def get_users():
@@ -175,9 +180,8 @@ def create_user():
                             vec, _ = extract_face_features(file_path)
                             if vec is not None:
                                 add_embedding_to_user(existing_user, vec)
-                                facial = Facial(user_id=3)
-                                add_embedding_to_facial(facial, vec)
-                                db.session.add(facial)
+                                #facial = Facial(user_id=3)
+                                add_embedding_to_facial(existing_user.id, vec)
                                 existing_user.profile_image_path = file_path
                                 db.session.commit()
                                 return jsonify({'message': 'Novo embedding adicionado ao usuário existente'}), 200
@@ -189,7 +193,6 @@ def create_user():
 
             # Novo usuário
             user = User(username=username, email=email, phone=phone)
-            facial = Facial(user_id=3)
 
             if 'profile_image' in request.files:
                 file = request.files['profile_image']
@@ -201,15 +204,15 @@ def create_user():
 
                     vec, _ = extract_face_features(file_path)
                     if vec is not None:
-                        add_embedding_to_user(user, vec)
-                        add_embedding_to_facial(facial, vec)
+                        #add_embedding_to_user(user, vec)
+                        db.session.add(user)
+                        db.session.commit()
+                        existing_user = User.query.filter_by(username=username).first()
+                        add_embedding_to_facial(existing_user.id, vec)
+                        db.session.commit()
                         user.profile_image_path = file_path
                     else:
                         return jsonify({'error': 'Não foi possível detectar face na imagem fornecida'}), 400
-
-            db.session.add(user)
-            db.session.add(facial)
-            db.session.commit()
 
             return jsonify({
                 'message': 'Usuário criado com sucesso',

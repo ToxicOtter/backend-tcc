@@ -128,3 +128,10 @@ class Facial(db.Model):
             'id': self.id,
             'user_id': self.user_id
         }
+    
+    def get_face_encoding(self):
+        """Recupera o encoding facial como numpy array"""
+        if self.face_encoding:
+            import numpy as np
+            return np.array(json.loads(self.face_encoding))
+        return None

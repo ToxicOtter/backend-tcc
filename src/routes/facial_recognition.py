@@ -9,7 +9,7 @@ from io import BytesIO
 from PIL import Image
 import logging
 
-from src.models.user import User, DetectionLog, Notification, db #,Schedule
+from src.models.user import User, DetectionLog, Notification, Facial, db #,Schedule
 #from src.utils.notifications import send_push_notification
 from config import get_config
 
@@ -204,10 +204,11 @@ def receive_image():
         best_distance = float("inf") # Para distância, menor é melhor
 
         # Compara com todos os usuários cadastrados
-        users = User.query.all()
-        for user in users:
-            if user.get_face_encoding() is not None:
-                known_face_encoding = user.get_face_encoding()
+        #users = User.query.all()
+        faces = Facial.query.all()
+        for face in faces:
+            if face.get_face_encoding() is not None:
+                known_face_encoding = face.get_face_encoding()
                 
                 # Garante que os encodings têm a mesma dimensão
                 if known_face_encoding.shape == current_face_encoding.shape:
@@ -216,13 +217,14 @@ def receive_image():
                     # Se a distância for menor que o threshold, é um possível match
                     if distance < config.FACE_RECOGNITION_THRESHOLD and distance < best_distance:
                         best_distance = distance
-                        best_match = user
+                        best_match = face
 
         # Remove a imagem temporária após o processamento
         os.remove(temp_file_path)
 
         if best_match:
             # Usuário reconhecido
+            best_match = User.query.filter_by(id=best_match.user_id).first()
             detection_log = DetectionLog(
                 user_id=best_match.id,
                 image_path=temp_file_path, 
@@ -236,6 +238,7 @@ def receive_image():
             fim = datetime.now()
             duracao = (fim - inicio).total_seconds() * 1000  # em ms
             status = 'recognized'
+            best_distance = 1 - best_distance
             print(f"[{datetime.now()}] IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: sim | Usuário: {best_match.username} ({best_distance:.2%}) | Tempo resposta: {duracao:.2f} ms")
             logging.info(f"IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: sim | Usuário: {best_match.username} ({best_distance:.2%}) | Tempo resposta: {duracao:.2f} ms")
 
