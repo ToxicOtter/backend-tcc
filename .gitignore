@@ -30,3 +30,5 @@ Thumbs.db
 # --- VSCode ---
 .vscode/
 .history/
+
+src/secrets/service-account.json

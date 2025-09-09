@@ -9,6 +9,8 @@ from src.models.user import db
 from src.routes.user import user_bp
 from src.routes.facial_recognition import facial_bp
 from src.routes.notifications import notifications_bp
+from src.models.device import Device
+from src.routes.device import devices_bp
 
 app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), 'static'))
 app.config['SECRET_KEY'] = 'asdf#FGSgvasgf$5$WGT'
@@ -23,6 +25,7 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 app.register_blueprint(user_bp, url_prefix='/api')
 app.register_blueprint(facial_bp, url_prefix='/api')
 app.register_blueprint(notifications_bp, url_prefix='/api')
+app.register_blueprint(devices_bp, url_prefix='/api')
 
 # Configuração do banco de dados
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(os.path.dirname(__file__), 'database', 'app.db')}"

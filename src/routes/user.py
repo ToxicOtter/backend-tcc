@@ -186,7 +186,7 @@ def create_user():
                                 db.session.commit()
                                 return jsonify({'message': 'Novo embedding adicionado ao usuário existente'}), 200
                             else:
-                                return jsonify({'error': 'Não foi possível detectar face na imagem fornecida'}), 400
+                                return jsonify({'error': 'Não foi possível detectar face na imagem fornecida', 'user': existing_user.to_dict()}), 400
                     return jsonify({'error': 'Nenhuma imagem enviada para atualizar embedding'}), 400
                 else:
                     return jsonify({'error': 'Username já existe com outro email'}), 400

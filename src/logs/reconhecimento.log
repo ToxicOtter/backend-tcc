@@ -471,3 +471,93 @@
 [2025-09-07 23:39:06] 10.0.0.190 - - [07/Sep/2025 23:39:06] "POST api/images HTTP/1.1" 200 -
 [2025-09-07 23:39:16] IP: 10.0.0.190 | Status: recognized | Iluminação: 60.89 | Reconhecido: sim | Usuário: Luao (48.23%) | Tempo resposta: 5144.17 ms
 [2025-09-07 23:39:16] 10.0.0.190 - - [07/Sep/2025 23:39:16] "POST api/images HTTP/1.1" 200 -
+[2025-09-08 19:10:40] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.0.0.147:5001
+[2025-09-08 19:10:40] [33mPress CTRL+C to quit[0m
+[2025-09-08 19:10:40]  * Restarting with stat
+[2025-09-08 19:10:40]  * Debugger is active!
+[2025-09-08 19:10:40]  * Debugger PIN: 107-621-121
+[2025-09-08 19:19:21] 10.0.0.147 - - [08/Sep/2025 19:19:21] "[31m[1mPOST /users HTTP/1.1[0m" 405 -
+[2025-09-08 19:19:36] 10.0.0.147 - - [08/Sep/2025 19:19:36] "[31m[1mPOST /users HTTP/1.1[0m" 405 -
+[2025-09-08 19:24:15] 10.0.0.147 - - [08/Sep/2025 19:24:15] "[31m[1mPOST /users HTTP/1.1[0m" 405 -
+[2025-09-08 19:24:51] 10.0.0.147 - - [08/Sep/2025 19:24:51] "[31m[1mPOST /users HTTP/1.1[0m" 405 -
+[2025-09-08 19:27:50] 127.0.0.1 - - [08/Sep/2025 19:27:50] "POST /api/users HTTP/1.1" 200 -
+[2025-09-08 19:28:18] 10.0.0.147 - - [08/Sep/2025 19:28:18] "[31m[1mPOST /users HTTP/1.1[0m" 405 -
+[2025-09-08 19:30:11] 127.0.0.1 - - [08/Sep/2025 19:30:11] "[31m[1mPOST /users HTTP/1.1[0m" 405 -
+[2025-09-08 19:32:34] 127.0.0.1 - - [08/Sep/2025 19:32:34] "[31m[1mPOST /users HTTP/1.1[0m" 405 -
+[2025-09-08 19:36:35] 127.0.0.1 - - [08/Sep/2025 19:36:35] "[35m[1mPOST /api/users HTTP/1.1[0m" 201 -
+[2025-09-08 22:33:47] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.0.0.113:5001
+[2025-09-08 22:33:47] [33mPress CTRL+C to quit[0m
+[2025-09-08 22:33:47]  * Restarting with stat
+[2025-09-08 22:33:48]  * Debugger is active!
+[2025-09-08 22:33:48]  * Debugger PIN: 107-621-121
+[2025-09-08 22:38:58] 10.0.0.169 - - [08/Sep/2025 22:38:58] "[35m[1mPOST /api/users HTTP/1.1[0m" 201 -
+[2025-09-09 00:22:21]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\services\\firebase.py', reloading
+[2025-09-09 00:22:21]  * Restarting with stat
+[2025-09-09 00:22:22]  * Debugger is active!
+[2025-09-09 00:22:22]  * Debugger PIN: 107-621-121
+[2025-09-09 00:22:56]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\models\\device.py', reloading
+[2025-09-09 00:22:56]  * Restarting with stat
+[2025-09-09 00:22:57]  * Debugger is active!
+[2025-09-09 00:22:57]  * Debugger PIN: 107-621-121
+[2025-09-09 00:24:00]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\main.py', reloading
+[2025-09-09 00:24:00]  * Restarting with stat
+[2025-09-09 00:24:01]  * Debugger is active!
+[2025-09-09 00:24:01]  * Debugger PIN: 107-621-121
+[2025-09-09 00:24:24]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\device.py', reloading
+[2025-09-09 00:24:24]  * Restarting with stat
+[2025-09-09 00:24:25]  * Debugger is active!
+[2025-09-09 00:24:25]  * Debugger PIN: 107-621-121
+[2025-09-09 00:24:48]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\main.py', reloading
+[2025-09-09 00:24:48]  * Restarting with stat
+[2025-09-09 00:24:49]  * Debugger is active!
+[2025-09-09 00:24:49]  * Debugger PIN: 107-621-121
+[2025-09-09 00:25:24]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\main.py', reloading
+[2025-09-09 00:25:24]  * Restarting with stat
+[2025-09-09 00:25:25]  * Debugger is active!
+[2025-09-09 00:25:25]  * Debugger PIN: 107-621-121
+[2025-09-09 00:25:47]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\facial_recognition.py', reloading
+[2025-09-09 00:25:48]  * Restarting with stat
+[2025-09-09 00:46:42] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.0.0.113:5001
+[2025-09-09 00:46:42] [33mPress CTRL+C to quit[0m
+[2025-09-09 00:46:42]  * Restarting with stat
+[2025-09-09 00:46:43]  * Debugger is active!
+[2025-09-09 00:46:43]  * Debugger PIN: 107-621-121
+[2025-09-09 00:47:43] 10.0.0.169 - - [09/Sep/2025 00:47:43] "[35m[1mPOST /api/users HTTP/1.1[0m" 201 -
+[2025-09-09 00:50:40]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\device.py', reloading
+[2025-09-09 00:50:40]  * Restarting with stat
+[2025-09-09 00:50:41]  * Debugger is active!
+[2025-09-09 00:50:41]  * Debugger PIN: 107-621-121
+[2025-09-09 00:50:46] 10.0.0.169 - - [09/Sep/2025 00:50:46] "POST /api/users HTTP/1.1" 200 -
+[2025-09-09 00:50:54] 10.0.0.169 - - [09/Sep/2025 00:50:54] "POST /api/users HTTP/1.1" 200 -
+[2025-09-09 00:51:06] 10.0.0.169 - - [09/Sep/2025 00:51:06] "[35m[1mPOST /api/users HTTP/1.1[0m" 201 -
+[2025-09-09 00:52:03] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.0.0.113:5001
+[2025-09-09 00:52:03] [33mPress CTRL+C to quit[0m
+[2025-09-09 00:52:03]  * Restarting with stat
+[2025-09-09 00:52:04]  * Debugger is active!
+[2025-09-09 00:52:04]  * Debugger PIN: 107-621-121
+[2025-09-09 00:57:31]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\models\\user.py', reloading
+[2025-09-09 00:57:31]  * Restarting with stat
+[2025-09-09 00:57:32]  * Debugger is active!
+[2025-09-09 00:57:32]  * Debugger PIN: 107-621-121
+[2025-09-09 00:57:57] 10.0.0.169 - - [09/Sep/2025 00:57:57] "[35m[1mPOST /api/users HTTP/1.1[0m" 201 -
+[2025-09-09 00:58:24] 10.0.0.169 - - [09/Sep/2025 00:58:24] "POST /api/users HTTP/1.1" 200 -
+[2025-09-09 01:04:56]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\routes\\user.py', reloading
+[2025-09-09 01:04:56]  * Restarting with stat
+[2025-09-09 01:04:57]  * Debugger is active!
+[2025-09-09 01:04:57]  * Debugger PIN: 107-621-121
+[2025-09-09 01:06:04] 10.0.0.169 - - [09/Sep/2025 01:06:04] "[35m[1mPOST /api/users HTTP/1.1[0m" 201 -
+[2025-09-09 01:06:04] 10.0.0.169 - - [09/Sep/2025 01:06:04] "[35m[1mPOST /api/devices/register HTTP/1.1[0m" 500 -
+[2025-09-09 01:09:32]  * Detected change in 'C:\\Users\\Luan Lima Lopes\\Downloads\\Atualziado\\facial_recognition_backend\\src\\models\\device.py', reloading
+[2025-09-09 01:09:32]  * Restarting with stat

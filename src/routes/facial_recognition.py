@@ -12,6 +12,8 @@ import logging
 from src.models.user import User, DetectionLog, Notification, Facial, RecognitionLog, db #,Schedule
 #from src.utils.notifications import send_push_notification
 from config import get_config
+from src.services.firebase import send_to_token
+from src.models.device import Device
 
 # Contadores globais
 total_verificacoes = 0
@@ -267,6 +269,25 @@ def receive_image():
             )
             db.session.add(recognition_log)
             db.session.commit()
+            
+            devices = Device.query.filter_by(user_id=best_match.id).all()
+            title = "Rosto reconhecido"
+            body  = f"{best_match.username} reconhecido ({best_distance:.0%})"
+            payload = {
+                "status": "recognized",
+                "user_id": best_match.id,
+                "username": best_match.username,
+                "confidence": f"{best_distance:.2f}",
+                "detection_id": recognition_log.id
+            }
+            
+            results = []
+            for d in devices:
+                try:
+                    mid = send_to_token(d.token, title, body, payload)
+                    results.append({"token": d.token, "message_id": mid})
+                except Exception as e:
+                    results.append({"token": d.token, "error": str(e)})
 
             return jsonify({
                 'status': 'recognized',

@@ -158,3 +158,19 @@ class Facial(db.Model):
             import numpy as np
             return np.array(json.loads(self.face_encoding))
         return None
+    
+class Device(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, index=True, nullable=False)
+    token   = db.Column(db.String(255), unique=True, nullable=False)
+    platform = db.Column(db.String(20))
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'token': self.token,
+            'platform': self.platform,
+            'updated_at': self.updated_at
+        }
