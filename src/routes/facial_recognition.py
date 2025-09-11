@@ -9,11 +9,10 @@ from io import BytesIO
 from PIL import Image
 import logging
 
-from src.models.user import User, DetectionLog, Notification, Facial, RecognitionLog, db #,Schedule
+from src.models.user import User, DetectionLog, Notification, Facial, RecognitionLog, Device, db #,Schedule
 #from src.utils.notifications import send_push_notification
 from config import get_config
-from src.services.firebase import send_to_token
-from src.models.device import Device
+from src.services.push import push_to_user_devices
 
 # Contadores globais
 total_verificacoes = 0
@@ -281,13 +280,8 @@ def receive_image():
                 "detection_id": recognition_log.id
             }
             
-            results = []
-            for d in devices:
-                try:
-                    mid = send_to_token(d.token, title, body, payload)
-                    results.append({"token": d.token, "message_id": mid})
-                except Exception as e:
-                    results.append({"token": d.token, "error": str(e)})
+            results = push_to_user_devices(best_match.id, title, body, payload)
+            logging.info(f"FCM results: {results}")
 
             return jsonify({
                 'status': 'recognized',
