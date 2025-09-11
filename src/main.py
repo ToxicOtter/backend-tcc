@@ -9,7 +9,6 @@ from src.models.user import db
 from src.routes.user import user_bp
 from src.routes.facial_recognition import facial_bp
 from src.routes.notifications import notifications_bp
-from src.models.device import Device
 from src.routes.device import devices_bp
 
 app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), 'static'))

@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify
-from src.models.device import Device
-from src.models.user import db  # ✅ pegue o db daqui
+from src.models.user import Device, db  # ✅ pegue o db daqui
 
 devices_bp = Blueprint('devices', __name__)
 
