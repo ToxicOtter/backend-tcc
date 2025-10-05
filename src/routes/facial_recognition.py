@@ -1,18 +1,26 @@
 import os
 import cv2
 import numpy as np
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from datetime import datetime, time, timedelta
 from werkzeug.utils import secure_filename
 import base64
 from io import BytesIO
 from PIL import Image
 import logging
+import face_recognition
 
 from src.models.user import User, DetectionLog, Notification, Facial, RecognitionLog, Device, db #,Schedule
 #from src.utils.notifications import send_push_notification
 from config import get_config
 from src.services.push import push_to_user_devices
+
+# Configurações
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+
+# Threshold típico para face_recognition (L2)
+EMBEDDING_DISTANCE_THRESHOLD = 0.60  # ajuste fino depois com seus dados
 
 # Contadores globais
 total_verificacoes = 0
@@ -50,24 +58,24 @@ def calcular_iluminacao(image_path):
 # Caminhos para os modelos. Assumimos que estão em src/models/ dentro do projeto.
 # Certifique-se de que esses arquivos existem na pasta src/models/
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # sobe 2 níveis: de routes -> src -> backend
-MODELS_DIR = os.path.join(BASE_DIR, "models")
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # sobe 2 níveis: de routes -> src -> backend
+# MODELS_DIR = os.path.join(BASE_DIR, "models")
 
-PROTOTXT_PATH = os.path.join(MODELS_DIR, "deploy.prototxt")
-CAFFEMODEL_PATH = os.path.join(MODELS_DIR, "res10_300x300_ssd_iter_140000.caffemodel")
-EMBEDDING_MODEL_PATH = os.path.join(MODELS_DIR, "openface.nn4.small2.v1.t7")
+# PROTOTXT_PATH = os.path.join(MODELS_DIR, "deploy.prototxt")
+# CAFFEMODEL_PATH = os.path.join(MODELS_DIR, "res10_300x300_ssd_iter_140000.caffemodel")
+# EMBEDDING_MODEL_PATH = os.path.join(MODELS_DIR, "openface.nn4.small2.v1.t7")
 
 
 # Carregar os modelos
-try:
-    face_detector = cv2.dnn.readNet(PROTOTXT_PATH, CAFFEMODEL_PATH)
-    face_recognizer = cv2.dnn.readNetFromTorch(EMBEDDING_MODEL_PATH)
-    print("Modelos DNN carregados com sucesso!")
-except Exception as e:
-    print(f"ERRO ao carregar modelos DNN: {e}")
-    print("Verifique se os arquivos de modelo estão na pasta src/models/ e se os caminhos estão corretos.") 
-    face_detector = None
-    face_recognizer = None
+# try:
+#     face_detector = cv2.dnn.readNet(PROTOTXT_PATH, CAFFEMODEL_PATH)
+#     face_recognizer = cv2.dnn.readNetFromTorch(EMBEDDING_MODEL_PATH)
+#     print("Modelos DNN carregados com sucesso!")
+# except Exception as e:
+#     print(f"ERRO ao carregar modelos DNN: {e}")
+#     print("Verifique se os arquivos de modelo estão na pasta src/models/ e se os caminhos estão corretos.") 
+#     face_detector = None
+#     face_recognizer = None
 
 # --- Funções de Ajuda ---
 
@@ -76,9 +84,11 @@ def allowed_file(filename):
            filename.rsplit(".", 1)[1].lower() in config.ALLOWED_EXTENSIONS
 
 def ensure_upload_folder():
-    os.makedirs(config.UPLOAD_FOLDER, exist_ok=True)
-    os.makedirs(config.PROFILE_UPLOAD_FOLDER, exist_ok=True)
-    os.makedirs(config.DETECTION_UPLOAD_FOLDER, exist_ok=True)
+    """Garante que a pasta de uploads existe"""
+    upload_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), UPLOAD_FOLDER)
+    if not os.path.exists(upload_path):
+        os.makedirs(upload_path)
+    return upload_path
 
 # --- Funções de Detecção e Extração de Características (Atualizadas para DNN) ---
 
@@ -147,192 +157,257 @@ def hybrid_distance(encoding1, encoding2, alpha=0.5):
     cos = 1 - np.dot(encoding1/np.linalg.norm(encoding1), encoding2/np.linalg.norm(encoding2))  # 0 = igual
     return (alpha * eu) + ((1-alpha) * cos)
 
+# ======== ALTERADO: detecção com face_recognition ========
+def detect_faces_dlib(image_path):
+    """
+    Detecta faces usando face_recognition (dlib).
+    Retorna lista de boxes no formato (top, right, bottom, left).
+    """
+    try:
+        img = face_recognition.load_image_file(image_path)  # RGB
+        # modelo "hog" é mais leve; se precisar, pode trocar para model="cnn" (mais pesado)
+        face_locations = face_recognition.face_locations(img, model="hog")
+        return face_locations
+    except Exception as e:
+        print(f"Erro na detecção de faces (dlib): {e}")
+        return []
+
+# ======== ALTERADO: extração de embedding 128-D ========
+def extract_face_embedding(image_path, face_box):
+    """
+    Extrai embedding (vetor 128-D) de uma face usando face_recognition.
+    face_box deve ser (top, right, bottom, left).
+    """
+    try:
+        img = face_recognition.load_image_file(image_path)  # RGB
+        encodings = face_recognition.face_encodings(img, known_face_locations=[face_box], num_jitters=0)
+        if encodings and len(encodings) > 0:
+            return encodings[0].astype(np.float32)
+        return None
+    except Exception as e:
+        print(f"Erro na extração de embedding: {e}")
+        return None
+
+def compare_embeddings(embedding1, embedding2, threshold=EMBEDDING_DISTANCE_THRESHOLD):
+    """
+    Compara 2 embeddings 128-D via distância L2.
+    Retorna (is_match: bool, distance: float, similarity: float[0..1 aproximado])
+    similarity aqui é 1 - distance (apenas para manter compatibilidade com seu JSON).
+    """
+    try:
+        if embedding1 is None or embedding2 is None:
+            return False, 0.0, 0.0
+        # face_recognition.face_distance também pode ser usado:
+        # dist = face_recognition.face_distance([embedding2], embedding1)[0]
+        dist = float(np.linalg.norm(embedding1 - embedding2))
+        is_match = dist < threshold
+        similarity_approx = max(0.0, 1.0 - dist)  # apenas ilustrativo (não é probabilidade)
+        return is_match, dist, similarity_approx
+    except Exception as e:
+        print(f"Erro na comparação de embeddings: {e}")
+        return False, 0.0, 0.0
+
+def score_conf(dist, th=EMBEDDING_DISTANCE_THRESHOLD):
+    return float(np.clip(1.0 - (dist / th), 0.0, 1.0))
+
 # --- Rota de Recebimento de Imagem (Atualizada) ---
 
 @facial_bp.route("/images", methods=["POST"])
 def receive_image():
-    ensure_upload_folder()
-
     inicio = datetime.now()
+    try:
+        upload_path = ensure_upload_folder()
 
-    if "image" not in request.files:
-        return jsonify({"error": "Nenhuma imagem fornecida"}), 400
+        # Verifica se há arquivo na requisição
+        if 'image' not in request.files:
+            return jsonify({'error': 'Nenhuma imagem enviada'}), 400
 
-    file = request.files["image"]
-    if file.filename == "":
-        return jsonify({"error": "Nome de arquivo inválido"}), 400
+        file = request.files['image']
+        if file.filename == '':
+            return jsonify({'error': 'Nenhum arquivo selecionado'}), 400
 
-    if file and allowed_file(file.filename):
-        filename = secure_filename(f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{file.filename}")
-        # Salva a imagem temporariamente para processamento
-        temp_file_path = os.path.join(config.UPLOAD_FOLDER, filename)
-        file.save(temp_file_path)
+        if file and allowed_file(file.filename):
+            # Salva a imagem
+            filename = secure_filename(f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{file.filename}")
+            file_path = os.path.join(upload_path, filename)
+            file.save(file_path)
 
-        global total_verificacoes, total_reconhecidos
-        total_verificacoes += 1
-        iluminacao = calcular_iluminacao(temp_file_path)
+            global total_verificacoes, total_reconhecidos
+            total_verificacoes += 1
+            iluminacao = calcular_iluminacao(file_path)
 
-        # Detecta face e extrai características usando DNN
-        current_face_encoding, face_coords = detect_and_extract_face_features(temp_file_path)
+            # ======== usa dlib/face_recognition para detectar faces ========
+            faces = detect_faces_dlib(file_path)
+            if len(faces) == 0:
+                fim = datetime.now()
+                duracao = (fim - inicio).total_seconds() * 1000  # em ms
 
-        if current_face_encoding is None:
-            os.remove(temp_file_path) # Remove a imagem temporária
-            """ detection_log = DetectionLog(
-                user_id=None,
-                image_path=temp_file_path, 
-                confidence=0.0,
-                status="no_face"
-            )
-            db.session.add(detection_log)
-            db.session.commit() """
-            #return jsonify({"status": "no_face", "message": "Nenhuma face detectada na imagem"}), 200
-        
-            fim = datetime.now()
-            duracao = (fim - inicio).total_seconds() * 1000  # em ms
+                status = 'no_face'
+                print(f"[{datetime.now()}] IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
+                logging.info(f"IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
 
-            status = 'no_face'
-            print(f"[{datetime.now()}] IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
-            logging.info(f"IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
+                recognition_log = RecognitionLog(
+                    user_id= None,
+                    confidence= None,   # 0–1
+                    status=status,                                        # 'recognized', 'unknown', 'no_face', 'error'
+                    detected_at=fim,                        # ou o timestamp de início da req
+                    ip=request.remote_addr,
+                    light_level=iluminacao,
+                    recognized= False,
+                    latency_ms=duracao,
+                )
+                db.session.add(recognition_log)
+                db.session.commit()
 
-            recognition_log = RecognitionLog(
-                user_id= None,
-                confidence= None,   # 0–1
-                status=status,                                        # 'recognized', 'unknown', 'no_face', 'error'
-                detected_at=fim,                        # ou o timestamp de início da req
-                ip=request.remote_addr,
-                light_level=iluminacao,
-                recognized= False,
-                latency_ms=duracao,
-            )
-            db.session.add(recognition_log)
-            db.session.commit()
+                return jsonify({
+                    'status': 'no_face',
+                    'message': 'Nenhuma face detectada na imagem',
+                    'detection_id': recognition_log.id,
+                    'tempo_resposta_ms': duracao
+                })
 
-            return jsonify({
-                'status': 'no_face',
-                'message': 'Nenhuma face detectada na imagem',
-                'detection_id': recognition_log.id,
-                'tempo_resposta_ms': duracao
-            })
 
-        best_match = None
-        best_distance = float("inf") # Para distância, menor é melhor
+            # Considera a primeira face detectada
+            face_box = faces[0]  # (top, right, bottom, left)
 
-        # Compara com todos os usuários cadastrados
-        #users = User.query.all()
-        faces = Facial.query.all()
-        for face in faces:
-            if face.get_face_encoding() is not None:
-                known_face_encoding = face.get_face_encoding()
+            # ======== extrai embedding 128-D ========
+            face_embedding = extract_face_embedding(file_path, face_box)
+            if face_embedding is None:
+                fim = datetime.now()
+                duracao = (fim - inicio).total_seconds() * 1000  # em ms
+
+                status = 'error'
+                print(f"[{datetime.now()}] IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
+                logging.info(f"IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
+
+                recognition_log = RecognitionLog(
+                    user_id= None,
+                    confidence= None,   # 0–1
+                    status=status,                                        # 'recognized', 'unknown', 'no_face', 'error'
+                    detected_at=fim,                        # ou o timestamp de início da req
+                    ip=request.remote_addr,
+                    light_level=iluminacao,
+                    recognized= False,
+                    latency_ms=duracao,
+                )
+                db.session.add(recognition_log)
+                db.session.commit()
+
+                return jsonify({
+                    'status': 'error',
+                    'message': 'Erro ao processar a face detectada',
+                    'detection_id': recognition_log.id,
+                    'tempo_resposta_ms': duracao
+                })
+
+            # ======== compara com usuários cadastrados (que tenham embedding salvo) ========
+            users = User.query.filter(User.face_encoding.isnot(None)).all()
+            faces = Facial.query.all()
+            best_match = None
+            best_distance = float("inf")  # rastreamento do mais próximo SEM condicional
+            best_similarity = 0.0
+
+            #for user in users:
+            for face in faces:
+                known_face_embedding = face.get_face_encoding()  # deve retornar np.array shape (128,)
+                if known_face_embedding is None:
+                    continue
+                #is_match, dist, sim = compare_embeddings(face_embedding, known_face_embedding, EMBEDDING_DISTANCE_THRESHOLD)
+                #if is_match and dist < best_distance:
+                #    best_distance = dist
+                #    best_similarity = sim
+                #    best_match = face
                 
-                # Garante que os encodings têm a mesma dimensão
-                if known_face_encoding.shape == current_face_encoding.shape:
-                    distance = hybrid_distance(current_face_encoding, known_face_encoding)
-                    
-                    # Se a distância for menor que o threshold, é um possível match
-                    if distance < config.FACE_RECOGNITION_THRESHOLD and distance < best_distance:
-                        best_distance = distance
-                        best_match = face
+                dist = float(np.linalg.norm(face_embedding - known_face_embedding))
+                if dist < best_distance:
+                    best_distance = dist
+                    best_match = face
+                    # similaridade "didática" (não probabilística)
+                    best_similarity = max(0.0, 1.0 - dist)
+            print(best_distance)
+            if best_match is not None and best_distance < EMBEDDING_DISTANCE_THRESHOLD:
+                best_match = User.query.filter_by(id=best_match.user_id).first()
+                
+                total_reconhecidos += 1
+                fim = datetime.now()
+                duracao = (fim - inicio).total_seconds() * 1000  # em ms
+                status = 'recognized'
+                best_distance = 1 - best_distance
+                
+                print(f"[{datetime.now()}] IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: sim | Usuário: {best_match.username} ({best_distance:.2%}) | Tempo resposta: {duracao:.2f} ms")
+                logging.info(f"IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: sim | Usuário: {best_match.username} ({best_distance:.2%}) | Tempo resposta: {duracao:.2f} ms")
 
-        # Remove a imagem temporária após o processamento
-        os.remove(temp_file_path)
-
-        if best_match:
-            # Usuário reconhecido
-            best_match = User.query.filter_by(id=best_match.user_id).first()
-            """ detection_log = DetectionLog(
-                user_id=best_match.id,
-                image_path=temp_file_path, 
-                confidence=best_distance,
-                status="recognized"
-            )
-            db.session.add(detection_log)
-            db.session.commit() """
+                recognition_log = RecognitionLog(
+                    user_id= best_match.id,
+                    #confidence= best_distance,   # 0–1
+                    confidence= score_conf(best_distance, EMBEDDING_DISTANCE_THRESHOLD),
+                    status=status,                                        # 'recognized', 'unknown', 'no_face', 'error'
+                    detected_at=fim,                        # ou o timestamp de início da req
+                    ip=request.remote_addr,
+                    light_level=iluminacao,
+                    recognized= True,
+                    latency_ms=duracao,
+                )
+                db.session.add(recognition_log)
+                db.session.commit()
             
-            total_reconhecidos += 1
-            fim = datetime.now()
-            duracao = (fim - inicio).total_seconds() * 1000  # em ms
-            status = 'recognized'
-            best_distance = 1 - best_distance
-            print(f"[{datetime.now()}] IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: sim | Usuário: {best_match.username} ({best_distance:.2%}) | Tempo resposta: {duracao:.2f} ms")
-            logging.info(f"IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: sim | Usuário: {best_match.username} ({best_distance:.2%}) | Tempo resposta: {duracao:.2f} ms")
-
-            recognition_log = RecognitionLog(
-                user_id= best_match.id,
-                confidence= best_distance,   # 0–1
-                status=status,                                        # 'recognized', 'unknown', 'no_face', 'error'
-                detected_at=fim,                        # ou o timestamp de início da req
-                ip=request.remote_addr,
-                light_level=iluminacao,
-                recognized= True,
-                latency_ms=duracao,
-            )
-            db.session.add(recognition_log)
-            db.session.commit()
+                devices = Device.query.filter_by(user_id=best_match.id).all()
+                title = "Rosto reconhecido"
+                body  = f"{best_match.username} reconhecido ({best_distance:.0%})"
+                payload = {
+                    "status": "recognized",
+                    "user_id": best_match.id,
+                    "username": best_match.username,
+                    "confidence": f"{best_distance:.2f}",
+                    "detection_id": recognition_log.id
+                }
             
-            devices = Device.query.filter_by(user_id=best_match.id).all()
-            title = "Rosto reconhecido"
-            body  = f"{best_match.username} reconhecido ({best_distance:.0%})"
-            payload = {
-                "status": "recognized",
-                "user_id": best_match.id,
-                "username": best_match.username,
-                "confidence": f"{best_distance:.2f}",
-                "detection_id": recognition_log.id
-            }
-            
-            results = push_to_user_devices(best_match.id, title, body, payload)
-            logging.info(f"FCM results: {results}")
+                results = push_to_user_devices(best_match.id, title, body, payload)
+                logging.info(f"FCM results: {results}")
 
-            return jsonify({
-                'status': 'recognized',
-                'user': best_match.to_dict(),
-                'confidence': best_distance,
-                'detection_id': recognition_log.id,
-                'message': f"Usuário {best_match.username} reconhecido com {best_distance:.2%} de confiança",
-                'tempo_resposta_ms': duracao
-            })
-        else:
-            # Nenhuma correspondência encontrada
-            """ detection_log = DetectionLog(
-                user_id=None,
-                image_path=temp_file_path, 
-                confidence=0.0,
-                status="unknown"
-            )
-            db.session.add(detection_log)
-            db.session.commit() """
+                return jsonify({
+                    'status': 'recognized',
+                    'user': best_match.to_dict(),
+                    'confidence': best_distance,
+                    'detection_id': recognition_log.id,
+                    'message': f"Usuário {best_match.username} reconhecido com {best_distance:.2%} de confiança",
+                    'tempo_resposta_ms': duracao
+                })
+            else:
+                print('chegou aqui2')
+                fim = datetime.now()
+                duracao = (fim - inicio).total_seconds() * 1000  # em ms
 
-            fim = datetime.now()
-            duracao = (fim - inicio).total_seconds() * 1000  # em ms
+                status = 'unknown'
+                print(f"[{datetime.now()}] IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
+                logging.info(f"IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
 
-            status = 'unknown'
-            print(f"[{datetime.now()}] IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
-            logging.info(f"IP: {request.remote_addr} | Status: {status} | Iluminação: {iluminacao:.2f} | Reconhecido: não | Tempo resposta: {duracao:.2f} ms")
+                recognition_log = RecognitionLog(
+                    user_id= None,
+                    confidence= None,   # 0–1
+                    status=status,                                        # 'recognized', 'unknown', 'no_face', 'error'
+                    detected_at=fim,                        # ou o timestamp de início da req
+                    ip=request.remote_addr,
+                    light_level=iluminacao,
+                    recognized= False,
+                    latency_ms=duracao,
+                )
+                db.session.add(recognition_log)
+                db.session.commit()
 
-            recognition_log = RecognitionLog(
-                user_id= None,
-                confidence= None,   # 0–1
-                status=status,                                        # 'recognized', 'unknown', 'no_face', 'error'
-                detected_at=fim,                        # ou o timestamp de início da req
-                ip=request.remote_addr,
-                light_level=iluminacao,
-                recognized= False,
-                latency_ms=duracao,
-            )
-            db.session.add(recognition_log)
-            db.session.commit()
+                return jsonify({
+                    'status': 'unknown',
+                    'message': 'Face detectada mas usuário não reconhecido',
+                    'detection_id': recognition_log.id,
+                    'tempo_resposta_ms': duracao
+                })
 
-            return jsonify({
-                'status': 'unknown',
-                'message': 'Face detectada mas usuário não reconhecido',
-                'detection_id': recognition_log.id,
-                'tempo_resposta_ms': duracao
-            })
+        return jsonify({'error': 'Tipo de arquivo não permitido'}), 400
 
-            #return jsonify({"status": "unknown", "message": "Face detectada, mas usuário não reconhecido"}), 200
-
-    return jsonify({"error": "Tipo de arquivo não permitido ou erro no upload"}), 400
-
+    except Exception as e:
+        fim = datetime.now()
+        return jsonify({'error': f'Erro interno do servidor: {str(e)}'}), 500
+    
 @facial_bp.route("/images/base64", methods=["POST"])
 def receive_image_base64():
     """Recebe imagem em base64 do ESP32"""

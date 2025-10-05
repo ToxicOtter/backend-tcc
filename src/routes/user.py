@@ -7,7 +7,8 @@ import numpy as np
 from datetime import datetime
 import base64
 from io import BytesIO
-from PIL import Image
+from PIL import Image, ImageOps
+import face_recognition
 
 from src.models.user import User, DetectionLog, Notification, db #,Schedule
 from config import get_config
@@ -20,23 +21,23 @@ user_bp = Blueprint('user', __name__)
 UPLOAD_FOLDER = 'uploads/profiles'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # sobe 2 níveis: de routes -> src -> backend
-MODELS_DIR = os.path.join(BASE_DIR, "models")
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # sobe 2 níveis: de routes -> src -> backend
+#MODELS_DIR = os.path.join(BASE_DIR, "models")
 
-PROTOTXT_PATH = os.path.join(MODELS_DIR, "deploy.prototxt")
-CAFFEMODEL_PATH = os.path.join(MODELS_DIR, "res10_300x300_ssd_iter_140000.caffemodel")
-EMBEDDING_MODEL_PATH = os.path.join(MODELS_DIR, "openface.nn4.small2.v1.t7")
+#PROTOTXT_PATH = os.path.join(MODELS_DIR, "deploy.prototxt")
+#CAFFEMODEL_PATH = os.path.join(MODELS_DIR, "res10_300x300_ssd_iter_140000.caffemodel")
+#EMBEDDING_MODEL_PATH = os.path.join(MODELS_DIR, "openface.nn4.small2.v1.t7")
 
 # Carregar os modelos
-try:
-    face_detector = cv2.dnn.readNet(PROTOTXT_PATH, CAFFEMODEL_PATH)
-    face_recognizer = cv2.dnn.readNetFromTorch(EMBEDDING_MODEL_PATH)
-    print("Modelos DNN carregados com sucesso!")
-except Exception as e:
-    print(f"ERRO ao carregar modelos DNN: {e}")
-    print("Verifique se os arquivos de modelo estão na pasta src/models/ e se os caminhos estão corretos.") 
-    face_detector = None
-    face_recognizer = None
+#try:
+#    face_detector = cv2.dnn.readNet(PROTOTXT_PATH, CAFFEMODEL_PATH)
+#    face_recognizer = cv2.dnn.readNetFromTorch(EMBEDDING_MODEL_PATH)
+#    print("Modelos DNN carregados com sucesso!")
+#except Exception as e:
+#    print(f"ERRO ao carregar modelos DNN: {e}")
+#    print("Verifique se os arquivos de modelo estão na pasta src/models/ e se os caminhos estão corretos.") 
+#    face_detector = None
+#    face_recognizer = None
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -48,61 +49,136 @@ def ensure_upload_folder():
         os.makedirs(upload_path)
     return upload_path
 
-def extract_face_features(image_path):  
-    try:    
-        """Detecta faces na imagem e extrai as características (embeddings) usando DNN."""
-        if face_detector is None or face_recognizer is None:
-            print("Modelos DNN não carregados. Não é possível detectar e extrair características.")
+# def extract_face_features(image_path):
+#     """
+#     Detecta a maior face na imagem e retorna (embedding_128d, box).
+#     box no formato (top, right, bottom, left) — padrão face_recognition.
+#     """
+#     try:
+#         img = face_recognition.load_image_file(image_path)  # RGB
+
+#         # Detecta faces (HOG é leve e suficiente para 1 rps)
+#         # Se as faces estiverem pequenas, aumente o upsample para 1
+#         boxes = face_recognition.face_locations(img, model="hog", number_of_times_to_upsample=0)
+#         print(f'boxes: {boxes}')
+#         if not boxes:
+#             return None, None
+
+#         # OPCIONAL: escolha a maior face (melhor para fotos de cadastro)
+#         def area(b):
+#             t, r, btm, l = b
+#             return (btm - t) * (r - l)
+#         box = max(boxes, key=area)
+#         print(f'box: {box}')
+
+#         encs = face_recognition.face_encodings(img, known_face_locations=[box], num_jitters=0)
+#         print(f'encs: {encs}')
+#         if not encs:
+#             return None, None
+
+#         vec = encs[0].astype(np.float32)  # shape (128,)
+#         print(f'vec: {vec}')
+#         return vec, box
+#     except Exception as e:
+#         print(f"Erro na extração de embedding (dlib): {e}")
+#         return None, None
+
+# parâmetros de qualidade
+MIN_FACE_SIZE = 110         # mínimo em px de altura/largura da ROI (ajuste 100–140)
+MAX_INPUT_W = 1280          # evita estourar memória em fotos enormes
+TRY_CNN_FALLBACK = False    # se True, tenta model="cnn" por último (lento em CPU)
+
+def _load_rgb_exif(path):
+    """Carrega imagem corrigindo orientação EXIF e retorna ndarray RGB."""
+    im = Image.open(path)
+    im = ImageOps.exif_transpose(im)     # corrige rotação
+    im = im.convert("RGB")
+    arr = np.array(im)                   # RGB
+    # limita tamanho máximo pra não matar CPU
+    if arr.shape[1] > MAX_INPUT_W:
+        scale = MAX_INPUT_W / arr.shape[1]
+        new_h = int(arr.shape[0] * scale)
+        im = im.resize((MAX_INPUT_W, new_h))
+        arr = np.array(im)
+    return arr
+
+def _ensure_min_size(rgb, target_min=320):
+    """Se a menor dimensão for muito pequena, faz upscale x2 para ajudar o HOG."""
+    h, w = rgb.shape[:2]
+    if min(h, w) < target_min:
+        rgb = cv2.resize(rgb, (w*2, h*2), interpolation=cv2.INTER_CUBIC)
+    return rgb
+
+def _boxes_from_haar(rgb, scaleFactor=1.1, minNeighbors=4):
+    """Fallback com Haar frontal — retorna boxes no formato (top,right,bottom,left)."""
+    gray = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY)
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    dets = face_cascade.detectMultiScale(gray, scaleFactor=scaleFactor, minNeighbors=minNeighbors)
+    boxes = []
+    for (x, y, w, h) in dets:
+        t, l, r, b = y, x, x + w, y + h
+        boxes.append((t, r, b, l))
+    return boxes
+
+def extract_face_features(image_path):
+    """
+    Detecta a face e retorna (embedding_128d, box)
+    box: (top, right, bottom, left).
+    Estratégia:
+      1) Corrige EXIF e garante RGB
+      2) HOG com upsample 0 → 1 → 2
+      3) (opcional) CNN como último recurso
+      4) Fallback Haar
+      5) Checa tamanho mínimo e extrai encoding
+    """
+    try:
+        rgb = _load_rgb_exif(image_path)
+        rgb = _ensure_min_size(rgb, target_min=320)
+
+        # 1) Tenta HOG (rápido)
+        for up in (0, 1, 2):
+            boxes = face_recognition.face_locations(rgb, model="hog", number_of_times_to_upsample=up)
+            if boxes:
+                break
+
+        # 2) (Opcional) CNN como último recurso (lento em CPU)
+        if not boxes and TRY_CNN_FALLBACK:
+            boxes = face_recognition.face_locations(rgb, model="cnn", number_of_times_to_upsample=0)
+
+        # 3) Fallback Haar
+        if not boxes:
+            boxes = _boxes_from_haar(rgb, scaleFactor=1.1, minNeighbors=5)
+
+        if not boxes:
+            print("[extract_face_features] nenhum rosto detectado")
             return None, None
 
-        image = cv2.imread(image_path)
-        if image is None:
-            print(f"Erro: Não foi possível carregar a imagem em {image_path}")
+        # escolha a maior face (melhor para cadastro)
+        def area(b): t, r, btm, l = b; return (btm - t) * (r - l)
+        box = max(boxes, key=area)
+        t, r, b, l = box
+        h, w = (b - t), (r - l)
+
+        # 4) checa tamanho mínimo
+        if h < MIN_FACE_SIZE or w < MIN_FACE_SIZE:
+            print(f"[extract_face_features] ROI muito pequena: {w}x{h}px")
             return None, None
 
-        (h, w) = image.shape[:2]
-        blob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
-    
-        face_detector.setInput(blob)
-        detections = face_detector.forward()
+        # 5) extrai embedding 128-D
+        encs = face_recognition.face_encodings(rgb, known_face_locations=[box], num_jitters=0)
+        if not encs:
+            # pequeno reforço
+            encs = face_recognition.face_encodings(rgb, known_face_locations=[box], num_jitters=1)
+            if not encs:
+                print("[extract_face_features] falha ao encodar embedding")
+                return None, None
 
-        for i in range(0, detections.shape[2]):
-            confidence = detections[0, 0, i, 2]
-
-            if confidence > 0.8: # Threshold de confiança para detecção de rosto (pode ser ajustado)
-                box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
-                (startX, startY, endX, endY) = box.astype("int")
-
-                startX = max(0, startX)
-                startY = max(0, startY)
-                endX = min(w, endX)
-                endY = min(h, endY)
-
-                face = image[startY:endY, startX:endX]
-                if face.shape[0] < 20 or face.shape[1] < 20: # Ignora rostos muito pequenos
-                    continue
-
-                faceBlob = cv2.dnn.blobFromImage(face, 1.0 / 255, (96, 96), (0, 0, 0), swapRB=True, crop=False)
-                face_recognizer.setInput(faceBlob)
-                vec = face_recognizer.forward()  
-                
-                '''# --- PARTE NOVA ---
-                vec = np.array(vec, dtype=np.float32).flatten()  # Garante 1D
-                if vec.shape[0] != 128:
-                    # Pega apenas os primeiros 128 valores ou completa com zeros
-                    if vec.shape[0] > 128:
-                        vec = vec[:128]
-                    else:
-                        vec = np.pad(vec, (0, 128 - vec.shape[0]), mode='constant', constant_values=0)
-                # --- FIM DA PARTE NOVA ---'''
-            
-            #return vec, (startX, startY, endX, endY)
-            return vec.flatten(), (startX, startY, endX, endY)
-        return None, None # Nenhuma face detectada
+        vec = encs[0].astype(np.float32)
+        return vec, box
 
     except Exception as e:
-        print(f"Erro na extração de características: {e}")
-        return None
+        print(f"[extract_face_features] erro: {e}")
+        return None, None
 
 def add_embedding_to_user(user, new_embedding):
     """Adiciona um novo embedding ao usuário, garantindo lista no banco"""
@@ -203,6 +279,7 @@ def create_user():
                     file.save(file_path)
 
                     vec, _ = extract_face_features(file_path)
+                    
                     if vec is not None:
                         #add_embedding_to_user(user, vec)
                         db.session.add(user)
