@@ -435,17 +435,20 @@ def search_users():
     try:
         query = request.args.get('q', '').strip()
         if not query:
-            return jsonify({'users': []})
+            return jsonify({'error': 'Parâmetro q obrigatório'}), 400
         
-        users = User.query.filter(
-            (User.username.contains(query)) | 
-            (User.email.contains(query))
-        ).limit(10).all()
+        user = User.query.filter(
+            (User.username == query) | 
+            (User.email == query)
+        ).first()
         
-        return jsonify({
-            'users': [user.to_dict() for user in users],
-            'query': query
-        })
+        print(query)
+        print(user)
+        
+        if not user:
+            return jsonify({'user': None, 'message': 'Usuário não encontrado'}), 404
+
+        return jsonify({'user': user.to_dict()})
         
     except Exception as e:
         return jsonify({'error': f'Erro na busca: {str(e)}'}), 500
