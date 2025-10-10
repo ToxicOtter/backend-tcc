@@ -1,34 +1,33 @@
-# --- Python ---
+# não sobe os arquivos do python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 *.pdb
 *.egg-info/
-#*.log
 
-# --- Virtualenv ---
+# não sobe o ambiente virtual
 venv/
 .env/
 .env.local
 *.swp
 
-# --- Uploads e dados locais ---
+# uploads e dados locais
 uploads/
-#logs/
-#*.db
-#*.sqlite3
 
-# --- Jupyter Notebooks ---
+# não sobe arquivos do jupyter notebooks 
+# e desconsidera ele da contagem de linguagens do github
 .ipynb_checkpoints/
 *.ipynb_convert/
+*.ipynb -linguist-detectable
 
-# --- Sistema operacional ---
+# não sobe arquivos operacionais
 .DS_Store
 Thumbs.db
 
-# --- VSCode ---
+# não sobe arquivos do vscode
 .vscode/
 .history/
 
+# não sobe as chaves da api do firebase
 src/secrets/service-account.json
