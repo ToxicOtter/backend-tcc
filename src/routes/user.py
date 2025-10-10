@@ -5,14 +5,8 @@ import cv2
 import json
 import numpy as np
 from datetime import datetime
-import base64
-from io import BytesIO
 from PIL import Image, ImageOps
 import face_recognition
-
-from src.models.user import User, DetectionLog, Notification, db #,Schedule
-from config import get_config
-
 from src.models.user import User, db, Facial
 
 user_bp = Blueprint('user', __name__)
@@ -20,24 +14,6 @@ user_bp = Blueprint('user', __name__)
 # Configurações
 UPLOAD_FOLDER = 'uploads/profiles'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-
-#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # sobe 2 níveis: de routes -> src -> backend
-#MODELS_DIR = os.path.join(BASE_DIR, "models")
-
-#PROTOTXT_PATH = os.path.join(MODELS_DIR, "deploy.prototxt")
-#CAFFEMODEL_PATH = os.path.join(MODELS_DIR, "res10_300x300_ssd_iter_140000.caffemodel")
-#EMBEDDING_MODEL_PATH = os.path.join(MODELS_DIR, "openface.nn4.small2.v1.t7")
-
-# Carregar os modelos
-#try:
-#    face_detector = cv2.dnn.readNet(PROTOTXT_PATH, CAFFEMODEL_PATH)
-#    face_recognizer = cv2.dnn.readNetFromTorch(EMBEDDING_MODEL_PATH)
-#    print("Modelos DNN carregados com sucesso!")
-#except Exception as e:
-#    print(f"ERRO ao carregar modelos DNN: {e}")
-#    print("Verifique se os arquivos de modelo estão na pasta src/models/ e se os caminhos estão corretos.") 
-#    face_detector = None
-#    face_recognizer = None
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -48,40 +24,6 @@ def ensure_upload_folder():
     if not os.path.exists(upload_path):
         os.makedirs(upload_path)
     return upload_path
-
-# def extract_face_features(image_path):
-#     """
-#     Detecta a maior face na imagem e retorna (embedding_128d, box).
-#     box no formato (top, right, bottom, left) — padrão face_recognition.
-#     """
-#     try:
-#         img = face_recognition.load_image_file(image_path)  # RGB
-
-#         # Detecta faces (HOG é leve e suficiente para 1 rps)
-#         # Se as faces estiverem pequenas, aumente o upsample para 1
-#         boxes = face_recognition.face_locations(img, model="hog", number_of_times_to_upsample=0)
-#         print(f'boxes: {boxes}')
-#         if not boxes:
-#             return None, None
-
-#         # OPCIONAL: escolha a maior face (melhor para fotos de cadastro)
-#         def area(b):
-#             t, r, btm, l = b
-#             return (btm - t) * (r - l)
-#         box = max(boxes, key=area)
-#         print(f'box: {box}')
-
-#         encs = face_recognition.face_encodings(img, known_face_locations=[box], num_jitters=0)
-#         print(f'encs: {encs}')
-#         if not encs:
-#             return None, None
-
-#         vec = encs[0].astype(np.float32)  # shape (128,)
-#         print(f'vec: {vec}')
-#         return vec, box
-#     except Exception as e:
-#         print(f"Erro na extração de embedding (dlib): {e}")
-#         return None, None
 
 # parâmetros de qualidade
 MIN_FACE_SIZE = 110         # mínimo em px de altura/largura da ROI (ajuste 100–140)
@@ -256,7 +198,6 @@ def create_user():
                             vec, _ = extract_face_features(file_path)
                             if vec is not None:
                                 add_embedding_to_user(existing_user, vec)
-                                #facial = Facial(user_id=3)
                                 add_embedding_to_facial(existing_user.id, vec)
                                 existing_user.profile_image_path = file_path
                                 db.session.commit()
@@ -281,7 +222,6 @@ def create_user():
                     vec, _ = extract_face_features(file_path)
                     
                     if vec is not None:
-                        #add_embedding_to_user(user, vec)
                         db.session.add(user)
                         db.session.commit()
                         existing_user = User.query.filter_by(username=username).first()
