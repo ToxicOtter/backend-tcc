@@ -382,9 +382,6 @@ def search_users():
             (User.email == query)
         ).first()
         
-        print(query)
-        print(user)
-        
         if not user:
             return jsonify({'user': None, 'message': 'Usuário não encontrado'}), 404
 

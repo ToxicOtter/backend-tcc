@@ -5,7 +5,6 @@ devices_bp = Blueprint('devices', __name__)
 
 @devices_bp.route('/devices/register', methods=['POST','OPTIONS'])
 def register_device():
-    print('chegou')
     if request.method == 'OPTIONS':
         return ('', 204)
     data = request.get_json(silent=True) or {}

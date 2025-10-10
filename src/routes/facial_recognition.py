@@ -211,7 +211,6 @@ def receive_image():
                     best_match = face
                     # similaridade "didática" (não probabilística)
                     best_similarity = max(0.0, 1.0 - dist)
-            print(best_distance)
             if best_match is not None and best_distance < EMBEDDING_DISTANCE_THRESHOLD:
                 best_match = User.query.filter_by(id=best_match.user_id).first()
                 
@@ -259,7 +258,6 @@ def receive_image():
                     'tempo_resposta_ms': duracao
                 })
             else:
-                print('chegou aqui2')
                 fim = datetime.now()
                 duracao = (fim - inicio).total_seconds() * 1000  # em ms
 
