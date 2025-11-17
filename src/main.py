@@ -1,6 +1,6 @@
 import os
 import sys
-# DON'T CHANGE THIS !!!
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from flask import Flask, send_from_directory, jsonify
@@ -8,7 +8,6 @@ from flask_cors import CORS
 from src.models.user import db
 from src.routes.user import user_bp
 from src.routes.facial_recognition import facial_bp
-from src.routes.notifications import notifications_bp
 from src.routes.device import devices_bp
 from src.routes.auth import auth_bp
 
@@ -24,7 +23,6 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 # Registra blueprints
 app.register_blueprint(user_bp, url_prefix='/api')
 app.register_blueprint(facial_bp, url_prefix='/api')
-app.register_blueprint(notifications_bp, url_prefix='/api')
 app.register_blueprint(devices_bp, url_prefix='/api')
 app.register_blueprint(auth_bp, url_prefix='/api')
 
