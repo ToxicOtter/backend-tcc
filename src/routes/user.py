@@ -122,25 +122,6 @@ def extract_face_features(image_path):
         print(f"[extract_face_features] erro: {e}")
         return None, None
 
-def add_embedding_to_user(user, new_embedding):
-    """Adiciona um novo embedding ao usuário, garantindo lista no banco"""
-    new_embedding = np.array(new_embedding, dtype=np.float32).flatten()
-    if new_embedding.shape[0] != 128:
-        if new_embedding.shape[0] > 128:
-            new_embedding = new_embedding[:128]
-        else:
-            new_embedding = np.pad(new_embedding, (0, 128 - new_embedding.shape[0]),
-                                   mode='constant', constant_values=0)
-
-    # Se não existir embedding ainda, cria lista
-    if user.face_encoding is None:
-        embeddings_list = []
-    else:
-        embeddings_list = json.loads(user.face_encoding)
-
-    embeddings_list.append(new_embedding.tolist())
-    user.face_encoding = json.dumps(embeddings_list)
-
 def add_embedding_to_facial(user_id, new_embedding):
     """Adiciona um novo embedding ao usuário, garantindo lista no banco"""
     facial = Facial(user_id = user_id)
@@ -197,7 +178,6 @@ def create_user():
 
                             vec, _ = extract_face_features(file_path)
                             if vec is not None:
-                                add_embedding_to_user(existing_user, vec)
                                 add_embedding_to_facial(existing_user.id, vec)
                                 existing_user.profile_image_path = file_path
                                 db.session.commit()
