@@ -49,7 +49,7 @@ cd backend-tcc
 ## 1. Criar ambiente virtual
 ```cmd
 python -m venv venv
-.env\Scriptsctivate
+.\venv\Scripts\Activate
 ```
 
 ## 2. Instalar dependências
