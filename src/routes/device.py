@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from src.models.user import Device, db  # ✅ pegue o db daqui
+from src.models.user import Device, db 
 
 devices_bp = Blueprint('devices', __name__)
 
@@ -59,7 +59,6 @@ def refresh_device_token():
         if plataform: dev.plataform = plataform
         db.session.commit()
     else:
-        # se não achar o velho, cria com o novo para não perder o push
         db.session.add(Device(user_id=user_id, token=new_token, plataform=plataform))
         db.session.commit()
     
