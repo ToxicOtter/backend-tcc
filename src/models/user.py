@@ -10,8 +10,8 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     phone = db.Column(db.String(20), nullable=True)
-    face_encoding = db.Column(db.Text, nullable=True)  # Armazenar encoding facial como JSON
-    profile_image_path = db.Column(db.String(255), nullable=True)  # Caminho da imagem de perfil
+    face_encoding = db.Column(db.Text, nullable=True)
+    profile_image_path = db.Column(db.String(255), nullable=True)
     is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     last_seen = db.Column(db.DateTime, nullable=True)
@@ -32,10 +32,6 @@ class User(db.Model):
             "face_encodings_count": len(json.loads(self.face_encoding)) if self.face_encoding else 0
         }
 
-    '''def set_face_encoding(self, encoding):
-        """Armazena o encoding facial como JSON"""
-        if encoding is not None:
-            self.face_encoding = json.dumps(encoding.tolist())'''
     def set_face_encoding(self, encoding):
         """Armazena o encoding facial como JSON seguro."""
         if encoding is None:
@@ -78,7 +74,7 @@ class RecognitionLog(db.Model):
     light_level = db.Column(db.Float, nullable=True)               # iluminacao
     recognized = db.Column(db.Boolean, default=False)              # reconhecido (sim/nao -> True/False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    confidence = db.Column(db.Float, nullable=True)                # já tinha; mantenha como 0-1 ou % (defina padrão)
+    confidence = db.Column(db.Float, nullable=True)
     latency_ms = db.Column(db.Float, nullable=True)                # tempo_resposta_ms
 
     def to_dict(self):    
@@ -97,7 +93,7 @@ class Facial(db.Model):
     """Notificações para o app mobile"""
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    face_encoding = db.Column(db.Text, nullable=True)  # Armazenar encoding facial como JSON
+    face_encoding = db.Column(db.Text, nullable=True)
     
     user = db.relationship('User', backref=db.backref('facial', lazy=True))
 
