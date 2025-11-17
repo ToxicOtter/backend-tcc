@@ -69,29 +69,6 @@ class User(db.Model):
             return np.array(json.loads(self.face_encoding))
         return None
 
-
-class DetectionLog(db.Model):
-    """Log de detecções"""
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-    image_path = db.Column(db.String(255), nullable=True)
-    confidence = db.Column(db.Float, nullable=True)
-    detected_at = db.Column(db.DateTime, default=datetime.utcnow)
-    status = db.Column(db.String(20), default='unknown')  # 'recognized', 'unknown', 'error'
-    
-    user = db.relationship('User', backref=db.backref('detections', lazy=True))
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'user_id': self.user_id,
-            'username': self.user.username if self.user else None,
-            'image_path': self.image_path,
-            'confidence': self.confidence,
-            'detected_at': self.detected_at.isoformat(),
-            'status': self.status
-        }
-
 class RecognitionLog(db.Model):
     """Log de detecções"""
     id = db.Column(db.Integer, primary_key=True)
@@ -114,28 +91,6 @@ class RecognitionLog(db.Model):
             'user_id': self.user_id,
             'confidence': self.confidence,
             'latency_ms': self.latency_ms
-        }
-
-class Notification(db.Model):
-    """Notificações para o app mobile"""
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    message = db.Column(db.Text, nullable=False)
-    notification_type = db.Column(db.String(50), default='recognition')
-    is_read = db.Column(db.Boolean, default=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    user = db.relationship('User', backref=db.backref('notifications', lazy=True))
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'user_id': self.user_id,
-            'username': self.user.username if self.user else None,
-            'message': self.message,
-            'notification_type': self.notification_type,
-            'is_read': self.is_read,
-            'created_at': self.created_at.isoformat()
         }
     
 class Facial(db.Model):
