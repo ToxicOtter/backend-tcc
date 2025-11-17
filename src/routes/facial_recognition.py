@@ -4,12 +4,9 @@ import numpy as np
 from flask import Blueprint, request, jsonify
 from datetime import datetime
 from werkzeug.utils import secure_filename
-import base64
-from io import BytesIO
-from PIL import Image
 import logging
 import face_recognition
-from src.models.user import User, DetectionLog, Notification, Facial, RecognitionLog, Device, db
+from src.models.user import User, Facial, RecognitionLog, db
 from config import get_config
 from src.services.push import push_to_user_devices
 
@@ -18,7 +15,7 @@ UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 # Threshold típico para face_recognition (L2)
-EMBEDDING_DISTANCE_THRESHOLD = 0.60  # ajuste fino depois com seus dados
+EMBEDDING_DISTANCE_THRESHOLD = 0.70
 
 # Contadores globais
 total_verificacoes = 0
@@ -64,13 +61,13 @@ def ensure_upload_folder():
         os.makedirs(upload_path)
     return upload_path
 
-# --- Funções de Detecção e Extração de Características (Atualizadas para DNN) ---
+# --- Funções de Detecção e Extração de Características---
 
 def calculate_similarity(encoding1, encoding2):
     # Menor distância = maior similaridade
     return np.linalg.norm(encoding1 - encoding2)
 
-# ======== ALTERADO: detecção com face_recognition ========
+# ======== detecção com face_recognition ========
 def detect_faces_dlib(image_path):
     """
     Detecta faces usando face_recognition (dlib).
@@ -78,14 +75,13 @@ def detect_faces_dlib(image_path):
     """
     try:
         img = face_recognition.load_image_file(image_path)  # RGB
-        # modelo "hog" é mais leve; se precisar, pode trocar para model="cnn" (mais pesado)
         face_locations = face_recognition.face_locations(img, model="hog")
         return face_locations
     except Exception as e:
         print(f"Erro na detecção de faces (dlib): {e}")
         return []
 
-# ======== ALTERADO: extração de embedding 128-D ========
+# ======== extração de embedding 128-D ========
 def extract_face_embedding(image_path, face_box):
     """
     Extrai embedding (vetor 128-D) de uma face usando face_recognition.
@@ -104,8 +100,7 @@ def extract_face_embedding(image_path, face_box):
 def score_conf(dist, th=EMBEDDING_DISTANCE_THRESHOLD):
     return float(np.clip(1.0 - (dist / th), 0.0, 1.0))
 
-# --- Rota de Recebimento de Imagem (Atualizada) ---
-
+# --- Rota de Recebimento de Imagem  ---
 @facial_bp.route("/images", methods=["POST"])
 def receive_image():
     inicio = datetime.now()
@@ -144,7 +139,7 @@ def receive_image():
                     user_id= None,
                     confidence= None,   # 0–1
                     status=status,                                        # 'recognized', 'unknown', 'no_face', 'error'
-                    detected_at=fim,                        # ou o timestamp de início da req
+                    detected_at=fim,                    
                     ip=request.remote_addr,
                     light_level=iluminacao,
                     recognized= False,
@@ -269,7 +264,7 @@ def receive_image():
                     user_id= None,
                     confidence= None,   # 0–1
                     status=status,                                        # 'recognized', 'unknown', 'no_face', 'error'
-                    detected_at=fim,                        # ou o timestamp de início da req
+                    detected_at=fim,                       
                     ip=request.remote_addr,
                     light_level=iluminacao,
                     recognized= False,
